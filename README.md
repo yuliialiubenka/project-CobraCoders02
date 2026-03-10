@@ -1,6 +1,5 @@
-# Python Core Homework 08
+# COBRA — Contact Organizer & Basic Reminder Assistant
 
-Solution for Python Core homework assignment, module 8.
 This project contains a CLI contact assistant bot with OOP address book models and persistent storage via pickle (load on start, save on exit).
 
 ## Quick Start
