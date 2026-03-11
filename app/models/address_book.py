@@ -12,18 +12,22 @@ class AddressBook(UserDict):
     def add_record(self, record: Record) -> None:
         """Add a record to the address book."""
 
-        self.data[record.name.value] = record
+        self.data[record.id] = record
 
     def find(self, name: str) -> Record | None:
         """Find a record by name."""
 
-        return self.data.get(name)
+        for record in self.data.values():
+            if record.name.value.lower() == name.lower():
+                return record
+        return None
 
     def delete(self, name: str) -> None:
         """Delete a record by name."""
 
-        if name in self.data:
-            del self.data[name]
+        record = self.find(name)
+        if record:
+            del self.data[record.id]
 
     def search(self, query: str) -> list[Record]:
         """Search contacts by name, phone, email, address, or birthday."""
