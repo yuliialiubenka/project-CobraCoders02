@@ -18,4 +18,7 @@ class Name(Field):
         if not is_valid_name(value):
             raise InvalidNameError(INVALID_NAME_FORMAT)
 
+		# Normalize name
+        value = " ".join(word.title() for word in value.strip().split())
+	
         super().__init__(value)

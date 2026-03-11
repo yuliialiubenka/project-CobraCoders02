@@ -12,13 +12,52 @@ from .show_all import format_contact_records
     normalize_args=True,
     missing_args_message=error_missing_args_search(),
 )
-def search_contacts(args: list[str], book: AddressBook) -> str:
+
+
+def search_name(args: list[str], book: AddressBook) -> str:
     """Search contacts by partial match across contact fields."""
 
-    query = args[0]
-    matching_records = book.search(query)
+    name = args[0]
+    matching_records = book.search(name)
 
     if not matching_records:
         return no_matching_contacts_message()
 
     return format_contact_records(matching_records, title="=== Search Results ===")
+
+
+def search_phone(args: list[str], book: AddressBook) -> str:
+    """Search contacts by partial match across contact fields."""
+
+    phone = args[0]
+    matching_records = book.find_phone(phone)
+
+    if not matching_records:
+        return no_matching_contacts_message()
+
+    return format_contact_records([matching_records], title="=== Search Results ===")
+
+
+def search_email(args, book: AddressBook) -> str:
+    """Search contacts by partial match across contact fields."""
+
+    email = args[0]
+    matching_records = book.find_email(email)
+
+    if not matching_records:
+        return no_matching_contacts_message()
+
+    return format_contact_records([matching_records], title="=== Search Results ===")
+ 
+
+def search_birthday(args, book: AddressBook) -> str:
+    """Search contacts by match birthday fields."""
+
+    birthday = args[0]
+    matching_records = book.find_birthday(birthday)
+
+    if not matching_records:
+        return no_matching_contacts_message()
+
+    return format_contact_records([matching_records], title="=== Search Results ===")
+ 

@@ -26,6 +26,7 @@ INPUT_ERROR_ENTER_NAME = "Enter user name."
 UNKNOWN_COMMAND = (
     "Unknown command. Try: hello, add, change, phone, all, delete, "
     "add-email, add-address, show-email, show-address, search, "
+	"search_name, search_phone, search_email, search_birthday,"
     "add-birthday, show-birthday, birthdays, close, exit"
 )
 
