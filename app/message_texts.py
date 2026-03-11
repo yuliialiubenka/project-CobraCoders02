@@ -14,6 +14,10 @@ INPUT_ERROR_MISSING_ARGS_ADD_ADDRESS = (
     "To add an address, provide: name and address.\n"
     "Usage: add-address [name] [address]"
 )
+INPUT_ERROR_MISSING_DELIMITER_ADD_ADDRESS = (
+    "Use '--' to separate name and address.\n"
+	"Usage: add-address [name] -- [address]"
+)
 INPUT_ERROR_MISSING_ARGS_DELETE = (
     "To delete a contact, provide: name. " + "Usage: delete [name]"
 )
