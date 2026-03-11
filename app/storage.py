@@ -1,7 +1,7 @@
 """Persistence helpers for saving and loading the address book."""
 
 import pickle
-import uuid
+from uuid import uuid4
 
 from app.models import AddressBook
 
@@ -9,11 +9,19 @@ from app.models import AddressBook
 def _migrate_loaded_book(book: AddressBook) -> AddressBook:
     """Backfill newly added record attributes for older pickle snapshots."""
 
+    needs_rekey = False
+
     for record in book.data.values():
         if not hasattr(record, "email"):
             record.email = None
         if not hasattr(record, "address"):
             record.address = None
+        if not hasattr(record, "id"):
+            record.id = uuid4()
+            needs_rekey = True
+
+    if needs_rekey:
+        book.data = {record.id: record for record in book.data.values()}
 
     return book
 
@@ -91,7 +99,7 @@ def load_notes(filename: str = "notes.pkl") -> list[dict]:
             if isinstance(item, dict) and "id" in item and "text" in item:
                 result.append({"id": str(item["id"]), "text": str(item["text"])})
             else:
-                result.append({"id": str(uuid.uuid4()), "text": str(item)})
+                result.append({"id": str(uuid4()), "text": str(item)})
         return result
     except (FileNotFoundError, pickle.UnpicklingError, EOFError):
         return []
