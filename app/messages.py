@@ -36,6 +36,7 @@ from app.message_texts import (
     INPUT_ERROR_MISSING_ARGS_CHANGE,
     INPUT_ERROR_MISSING_ARGS_ADD_EMAIL,
     INPUT_ERROR_MISSING_ARGS_ADD_ADDRESS,
+    INPUT_ERROR_MISSING_DELIMITER_ADD_ADDRESS,
     INPUT_ERROR_MISSING_ARGS_DELETE,
     INPUT_ERROR_MISSING_ARGS_SEARCH,
 )
@@ -105,6 +106,12 @@ def error_missing_args_add_email() -> str:
 def error_missing_args_add_address() -> str:
     """Return error message for missing arguments in add-address command."""
     return INPUT_ERROR_MISSING_ARGS_ADD_ADDRESS
+
+
+@output_formatter(color=Fore.RED)
+def error_missing_delimiter_add_address() -> str:
+    """Return error message for missing '--' delimiter in add-address command."""
+    return INPUT_ERROR_MISSING_DELIMITER_ADD_ADDRESS
 
 
 @output_formatter(color=Fore.RED)
