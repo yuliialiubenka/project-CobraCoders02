@@ -1,6 +1,7 @@
 """Persistence helpers for saving and loading the address book."""
 
 import pickle
+from uuid import uuid4
 
 from app.models import AddressBook
 
@@ -8,11 +9,19 @@ from app.models import AddressBook
 def _migrate_loaded_book(book: AddressBook) -> AddressBook:
     """Backfill newly added record attributes for older pickle snapshots."""
 
+    needs_rekey = False
+
     for record in book.data.values():
         if not hasattr(record, "email"):
             record.email = None
         if not hasattr(record, "address"):
             record.address = None
+        if not hasattr(record, "id"):
+            record.id = uuid4()
+            needs_rekey = True
+
+    if needs_rekey:
+        book.data = {record.id: record for record in book.data.values()}
 
     return book
 

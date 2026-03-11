@@ -7,13 +7,35 @@ from app.message_texts import (
     INPUT_ERROR_MISSING_ARGS,
     UNKNOWN_COMMAND,
 )
+from app.models.exceptions import RecordError
+
+
+def _format_input_exception(exc: Exception) -> str:
+    """Convert known input exceptions to user-friendly messages."""
+
+    message = INPUT_ERROR_MISSING_ARGS
+
+    if isinstance(exc, ValueError):
+        if hasattr(exc, "custom_message"):
+            message = exc.custom_message
+    elif isinstance(exc, KeyError):
+        if exc.args and exc.args[0] == "unknown_command":
+            message = UNKNOWN_COMMAND
+        else:
+            message = INPUT_ERROR_CONTACT_NOT_FOUND
+    elif isinstance(exc, IndexError):
+        message = INPUT_ERROR_ENTER_NAME
+    elif isinstance(exc, RecordError):
+        message = str(exc)
+
+    return message
 
 
 def input_error(func: Callable[..., str]) -> Callable[..., str]:
     """
     Decorator to handle input errors in command handler functions.
 
-    Catches common exceptions (ValueError, KeyError, IndexError) and returns
+    Catches common exceptions (ValueError, KeyError, IndexError, RecordError) and returns
     user-friendly error messages instead of letting the program crash.
 
     Args:
@@ -34,15 +56,7 @@ def input_error(func: Callable[..., str]) -> Callable[..., str]:
     def inner(*args: object, **kwargs: object) -> str:
         try:
             return func(*args, **kwargs)
-        except ValueError as exc:
-            if hasattr(exc, "custom_message"):
-                return exc.custom_message
-            return INPUT_ERROR_MISSING_ARGS
-        except KeyError as exc:
-            if exc.args and exc.args[0] == "unknown_command":
-                return UNKNOWN_COMMAND
-            return INPUT_ERROR_CONTACT_NOT_FOUND
-        except IndexError:
-            return INPUT_ERROR_ENTER_NAME
+        except (ValueError, KeyError, IndexError, RecordError) as exc:
+            return _format_input_exception(exc)
 
     return inner
