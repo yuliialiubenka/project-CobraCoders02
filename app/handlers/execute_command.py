@@ -8,6 +8,7 @@ from .add_address import add_address
 from .add_birthday import add_birthday
 from .add_contact import add_contact
 from .add_email import add_email
+from .add_note import add_note
 from .birthdays import birthdays
 from .change_contact import change_contact
 from .delete_contact import delete_contact
@@ -16,6 +17,7 @@ from .show_all import show_all
 from .show_address import show_address
 from .show_birthday import show_birthday
 from .show_email import show_email
+from .show_notes import show_notes
 from .show_phone import show_phone
 
 
@@ -49,8 +51,10 @@ def execute_command(command: str, args: list[str], book: AddressBook) -> str:
         "delete": (delete_contact, "args_book"),
         "add-email": (add_email, "args_book"),
         "add-address": (add_address, "args_book"),
+        "add-note": (add_note, "args_book"),
         "show-email": (show_email, "args_book"),
         "show-address": (show_address, "args_book"),
+        "show-notes": (show_notes, "book"),
         "search": (search_contacts, "args_book"),
         "add-birthday": (add_birthday, "args_book"),
         "show-birthday": (show_birthday, "args_book"),

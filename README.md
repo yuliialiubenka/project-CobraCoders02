@@ -68,9 +68,11 @@ Interactive console application for contact management with input validation and
 - `change <name> <old_phone> <new_phone>` — change existing phone number
 - `add-email <name> <email>` — add or update contact email
 - `add-address <name> <address>` — add or update contact address
+- `add-note <text>` — add a standalone note (max 50 characters; stored in notes.pkl)
 - `phone <name>` — show phone numbers for contact
 - `show-email <name>` — show email for contact
 - `show-address <name>` — show address for contact
+- `show-notes` — show all notes with id and text
 - `search <query>` — search contacts by name, phone, email, address, or birthday
 - `delete <name>` — delete contact from address book
 - `add-birthday <name> <birthday>` — add birthday to contact (DD.MM.YYYY format)
@@ -279,6 +281,13 @@ birthdays 30                 # Show upcoming in the next 30 days
 - **Min length:** 5 characters
 - **Allowed:** letters, digits, spaces, commas, dots, slashes, hyphens, apostrophes, `#`
 - **Smart parsing:** `add-address` can work without quotes (it detects contact name first)
+
+### Notes
+
+- **Max length:** 50 characters (after trimming)
+- **Empty:** Note text must be non-empty after stripping; otherwise validation fails
+- **Storage:** Notes are stored in `notes.pkl` as a list of dicts with `id` (UUID4) and `text`; not tied to contacts
+- **Commands:** `add-note <text>`, `show-notes` (ids shown in square brackets)
 
 ## Requirements
 

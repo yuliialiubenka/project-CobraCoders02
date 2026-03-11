@@ -20,12 +20,16 @@ INPUT_ERROR_MISSING_ARGS_DELETE = (
 INPUT_ERROR_MISSING_ARGS_SEARCH = (
     "To search contacts, provide a query.\n" + "Usage: search [query]"
 )
+INPUT_ERROR_MISSING_ARGS_ADD_NOTE = (
+    "To add a note, provide note text (max 50 characters).\n"
+    "Usage: add-note [note text]"
+)
 INPUT_ERROR_CONTACT_NOT_FOUND = "Contact not found."
 INPUT_ERROR_ENTER_NAME = "Enter user name."
 
 UNKNOWN_COMMAND = (
     "Unknown command. Try: hello, add, change, phone, all, delete, "
-    "add-email, add-address, show-email, show-address, search, "
+    "add-email, add-address, add-note, show-email, show-address, show-notes, search, "
     "add-birthday, show-birthday, birthdays, close, exit"
 )
 
@@ -39,6 +43,7 @@ ERROR_UNEXPECTED_ARGUMENTS = "Error: The command '{command}' does not accept arg
 PROMPT_FOR_COMMAND = "Enter a command: "
 
 NO_CONTACTS_FOUND = "No contacts found."
+NO_NOTES_FOUND = "No notes found."
 
 INVALID_NAME_FORMAT = (
     "Invalid name format. Use letters with optional spaces, hyphens, or apostrophes."
@@ -58,6 +63,7 @@ INVALID_BIRTHDAY_FORMAT = "Invalid date format. Use DD.MM.YYYY"
 INVALID_DAYS_FORMAT = (
     "Invalid days format. Use a non-negative integer. Example: birthdays 7"
 )
+INVALID_NOTE_FORMAT = "Note must be 1 to 50 characters."
 INVALID_ARGUMENT_FORMAT = "Invalid format for argument {arg_index}."
 
 PHONE_NOT_FOUND_IN_RECORD = "Phone number {phone} not found in record"
@@ -69,6 +75,7 @@ EMAIL_ADDED = "Email added."
 EMAIL_UPDATED = "Email updated."
 ADDRESS_ADDED = "Address added."
 ADDRESS_UPDATED = "Address updated."
+NOTE_ADDED = "Note saved."
 NO_EMAIL_FOUND = "Email not set."
 NO_ADDRESS_FOUND = "Address not set."
 NO_MATCHING_CONTACTS = "No matching contacts found."

@@ -1,6 +1,7 @@
 """Persistence helpers for saving and loading the address book."""
 
 import pickle
+import uuid
 
 from app.models import AddressBook
 
@@ -54,3 +55,43 @@ def load_data(filename: str = "addressbook.pkl") -> AddressBook:
     # EOFError: file is empty/truncated (e.g., interrupted write)
     except (FileNotFoundError, pickle.UnpicklingError, EOFError):
         return AddressBook()
+
+
+def save_notes(notes: list[dict], filename: str = "notes.pkl") -> None:
+    """
+    Save the notes list to a file using pickle serialization.
+
+    Args:
+        notes: List of note dicts with "id" (str) and "text" (str) keys.
+        filename: The name of the file to save to (default: "notes.pkl").
+    """
+    with open(filename, "wb") as file:
+        pickle.dump(notes, file)
+
+
+def load_notes(filename: str = "notes.pkl") -> list[dict]:
+    """
+    Load the notes list from a file using pickle deserialization.
+
+    Args:
+        filename: The name of the file to load from (default: "notes.pkl").
+
+    Returns:
+        A list of note dicts with "id" (str) and "text" (str). If the file
+        does not exist or is invalid, returns an empty list. Legacy pickles
+        containing plain strings are migrated to dicts with new UUIDs.
+    """
+    try:
+        with open(filename, "rb") as file:
+            loaded = pickle.load(file)
+        if not isinstance(loaded, list):
+            return []
+        result = []
+        for item in loaded:
+            if isinstance(item, dict) and "id" in item and "text" in item:
+                result.append({"id": str(item["id"]), "text": str(item["text"])})
+            else:
+                result.append({"id": str(uuid.uuid4()), "text": str(item)})
+        return result
+    except (FileNotFoundError, pickle.UnpicklingError, EOFError):
+        return []
