@@ -14,6 +14,7 @@ from .delete_contact import delete_contact
 from .search_contacts import search_name
 from .search_contacts import search_phone
 from .search_contacts import search_email
+from .search_contacts import search_address
 from .search_contacts import search_birthday
 from .show_all import show_all
 from .show_address import show_address
@@ -57,6 +58,7 @@ def execute_command(command: str, args: list[str], book: AddressBook) -> str:
         "search-name": (search_name, "args_book"),
         "search-phone": (search_phone, "args_book"),
         "search-email": (search_email, "args_book"),
+        "search-address": (search_address, "args_book"),
         "search-birthday": (search_birthday, "args_book"),
         "add-birthday": (add_birthday, "args_book"),
         "show-birthday": (show_birthday, "args_book"),

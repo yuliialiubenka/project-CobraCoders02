@@ -16,6 +16,7 @@ from .show_phone import show_phone
 from .search_contacts import search_name
 from .search_contacts import search_phone
 from .search_contacts import search_email
+from .search_contacts import search_address
 from .search_contacts import search_birthday
 
 __all__ = [
@@ -32,8 +33,9 @@ __all__ = [
     "show_email",
     "birthdays",
     "execute_command",
-	"search_name",
-	"search_phone",
-	"search_email",
-	"search_birthday"
+    "search_name",
+    "search_phone",
+    "search_email",
+    "search_address",
+    "search_birthday",
 ]

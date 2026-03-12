@@ -9,55 +9,33 @@ from .record import Record
 class AddressBook(UserDict):
     """Class for storing records and managing contacts."""
 
+    @staticmethod
+    def _normalize_name(name: str) -> str:
+        """Normalize user-entered contact name for reliable lookups."""
+
+        return " ".join(word.title() for word in name.strip().split())
+
     def add_record(self, record: Record) -> None:
         """Add a record to the address book."""
 
-        self.data[record.name.value] = record
+        self.data[record.id] = record
 
     def find(self, name: str) -> Record | None:
         """Find a record by name."""
-        
-        normal_name = " ".join(word.title() for word in name.strip().split())
-        
-        return self.data.get(normal_name)
+
+        normalized_name = self._normalize_name(name)
+
+        for record in self.data.values():
+            if record.name.value == normalized_name:
+                return record
+        return None
 
     def delete(self, name: str) -> None:
         """Delete a record by name."""
-        
-        normal_name = " ".join(word.title() for word in name.strip().split())
-        
-        if normal_name in self.data:
-            del self.data[normal_name]
 
-    def search(self, query: str) -> list[Record]:
-        """Search contacts by name, phone, email, address, or birthday."""
-
-        normalized_query = query.strip().lower()
-        if not normalized_query:
-            return []
-
-        matches: list[Record] = []
-
-        for record in self.data.values():
-            searchable_fields = [record.name.value]
-            searchable_fields.extend(phone.value for phone in record.phones)
-
-            email = getattr(record, "email", None)
-            if email:
-                searchable_fields.append(email.value)
-
-            address = getattr(record, "address", None)
-            if address:
-                searchable_fields.append(address.value)
-
-            if record.birthday:
-                searchable_fields.append(record.birthday.value)
-
-            haystack = " ".join(searchable_fields).lower()
-            if normalized_query in haystack:
-                matches.append(record)
-
-        return sorted(matches, key=lambda record: record.name.value.lower())
+        record = self.find(name)
+        if record:
+            del self.data[record.id]
 
     def get_upcoming_birthdays(self, days_ahead: int = 7) -> list[dict[str, str]]:
         """
@@ -94,28 +72,3 @@ class AddressBook(UserDict):
                 )
 
         return upcoming
-
-    def find_phone(self, phone: str) -> Record | None:
-        """Find a record by phone."""
-        for record in self.data.values():
-            for ph in record.phones:
-                if ph.value == phone:
-                    return record
-    	
-        return None
-    
-    def find_email(self, email: str) -> Record | None:
-        """Find a record by email."""
-        for record in self.data.values():
-            if getattr(record.email, "value", None) == email:
-                return record
-    	
-        return None
-    
-    def find_birthday(self, birthday: str) -> Record | None:
-        """Find a record by email."""
-        for record in self.data.values():
-            if getattr(record.birthday, "value", None) == birthday:
-                return record
-    	
-        return None

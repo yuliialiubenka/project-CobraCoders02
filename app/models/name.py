@@ -14,11 +14,12 @@ class Name(Field):
     def __init__(self, value: str) -> None:
         """Initialize name field with validation."""
 
+        # Normalize name before validation so extra spaces and casing variations
+        # are accepted and stored consistently.
+        value = " ".join(word.title() for word in value.strip().split())
+
         # Validate name format
         if not is_valid_name(value):
             raise InvalidNameError(INVALID_NAME_FORMAT)
 
-		# Normalize name
-        value = " ".join(word.title() for word in value.strip().split())
-	
         super().__init__(value)

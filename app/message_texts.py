@@ -14,6 +14,10 @@ INPUT_ERROR_MISSING_ARGS_ADD_ADDRESS = (
     "To add an address, provide: name and address.\n"
     "Usage: add-address [name] [address]"
 )
+INPUT_ERROR_MISSING_DELIMITER_ADD_ADDRESS = (
+    "Use '--' to separate name and address.\n"
+	"Usage: add-address [name] -- [address]"
+)
 INPUT_ERROR_MISSING_ARGS_DELETE = (
     "To delete a contact, provide: name. " + "Usage: delete [name]"
 )
@@ -26,7 +30,7 @@ INPUT_ERROR_ENTER_NAME = "Enter user name."
 UNKNOWN_COMMAND = (
     "Unknown command. Try: hello, add, change, phone, all, delete, "
     "add-email, add-address, show-email, show-address, search, "
-	"search_name, search_phone, search_email, search_birthday,"
+    "search-name, search-phone, search-email, search-birthday,"
     "add-birthday, show-birthday, birthdays, close, exit"
 )
 
