@@ -9,11 +9,28 @@ from app.models import AddressBook, NotesBook, Note
 def _migrate_loaded_book(book: AddressBook) -> AddressBook:
     """Backfill newly added record attributes for older pickle snapshots."""
 
-    for record in book.data.values():
+    needs_rekey = False
+
+    for key, record in list(book.data.items()):
         if not hasattr(record, "email"):
             record.email = None
         if not hasattr(record, "address"):
             record.address = None
+        if not hasattr(record, "id"):
+            record.id = uuid4()
+            needs_rekey = True
+        else:
+            try:
+                record.id = UUID(str(record.id))
+            except (ValueError, TypeError):
+                record.id = uuid4()
+                needs_rekey = True
+
+        if key != record.id:
+            needs_rekey = True
+
+    if needs_rekey:
+        book.data = {record.id: record for record in book.data.values()}
 
     return book
 
