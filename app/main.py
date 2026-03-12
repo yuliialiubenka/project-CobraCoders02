@@ -31,7 +31,7 @@ def main() -> None:
     - phone <name>: Look up a contact's phone numbers
     - show-email <name>: Show email for a contact
     - show-address <name>: Show address for a contact
-    - show-notes: Show all notes with Title, Text, Tags, Date
+    - show-notes: Show all notes in a table (Title, Text, Tags if present, Date)
     - search <query>: Search contacts by any stored field
     - delete <name>: Remove a contact
     - all: Display all contacts in a formatted table
