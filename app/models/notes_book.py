@@ -68,3 +68,11 @@ class NotesBook(UserDict):
             if normalized_query in note.text.value.lower()
         ]
         return matches
+    
+    def find_tag(self, tag:str) -> list[Note]:
+        tag_to_find = tag if tag.startswith("#") else f"#{tag}"
+        return [
+            note
+            for note in self.data.values()
+            if any(tag.value == tag_to_find for tag in note.tags)
+        ]

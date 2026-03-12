@@ -85,3 +85,5 @@ NO_EMAIL_FOUND = "Email not set."
 NO_ADDRESS_FOUND = "Address not set."
 NO_MATCHING_CONTACTS = "No matching contacts found."
 NO_UPCOMING_BIRTHDAYS = "No upcoming birthdays in the next {days} days."
+
+INVALID_TAG_FORMAT = "A tag is #some_text&simbol_without_spase that begins with #."

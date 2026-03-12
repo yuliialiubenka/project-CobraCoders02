@@ -1,12 +1,14 @@
 """Note class for storing text notes."""
 
 from uuid import UUID, uuid4
+import re
 
 from app.message_texts import INVALID_NOTE_FORMAT
 from app.validators import is_valid_note
 
 from .exceptions import InvalidNoteError
 from .field import Field
+from .tag import TagMatch
 
 
 # pylint: disable=too-few-public-methods
@@ -39,8 +41,11 @@ class Note:
 
         self.id: UUID = uuid4()
         self.text: NoteText = NoteText(text)
+        
+        tags = re.findall(r"#([^\s]+)", text)
+        self.tags = [TagMatch("#" + tag) for tag in tags]
 
     def __str__(self) -> str:
         """Return string representation of the note."""
 
-        return f"[{self.id}]  {self.text}"
+        return f"[{self.id}]  {self.text} {self.tags}"

@@ -215,3 +215,18 @@ def is_valid_birthday(birthday: str) -> bool:
         return False
 
     return True
+
+def is_valid_tag(tag: str) -> bool:
+    """
+    Validate tag format.
+
+    Accepts standard #some_text&simbol_without_spase.
+    """
+
+    if not isinstance(tag, str):
+        return False
+
+    trimmed = tag.strip()
+    pattern = r"#[^\s]+"
+
+    return bool(re.fullmatch(pattern, trimmed))
