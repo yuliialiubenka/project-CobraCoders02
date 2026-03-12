@@ -26,4 +26,5 @@ Thumbs.db
 
 # Local app data
 addressbook.pkl
+notes.pkl
 pullrequests-list.txt

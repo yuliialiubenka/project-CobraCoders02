@@ -83,22 +83,34 @@ def is_valid_address(address: str) -> bool:
     return any(char.isalnum() for char in trimmed)
 
 
-def is_valid_note(note: str) -> bool:
-    """
-    Validate note text for add-note command.
+def is_valid_note_title(title: str) -> bool:
+    """Validate note title format."""
 
-    Note must be non-empty after stripping and at most 50 characters.
-
-    Args:
-        note: Note string to validate.
-
-    Returns:
-        True if note is valid, False otherwise.
-    """
-    if not isinstance(note, str):
+    if not isinstance(title, str):
         return False
-    trimmed = note.strip()
+
+    trimmed = title.strip()
     return 0 < len(trimmed) <= 50
+
+
+def is_valid_note_text(note_text: str) -> bool:
+    """Validate note text format."""
+
+    if not isinstance(note_text, str):
+        return False
+
+    trimmed = note_text.strip()
+    return 0 < len(trimmed) <= 500
+
+
+def is_valid_note_tag(tag: str) -> bool:
+    """Validate a single note tag."""
+
+    if not isinstance(tag, str):
+        return False
+
+    trimmed = tag.strip()
+    return 0 < len(trimmed) <= 30 and "--" not in trimmed
 
 
 def is_valid_name(name: str) -> bool:

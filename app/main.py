@@ -24,11 +24,14 @@ def main() -> None:
     - change <name> <old_phone> <new_phone>: Update phone number
     - add-email <name> <email>: Add or update contact email
     - add-address <name> <address>: Add or update contact address
-    - add-note <text>: Add a note (max 50 characters)
+    - add-note <title> -- <text> -- <tag1, tag2>: Add a note with optional tags
+    - delete-note <title>: Delete a note by title
+    - edit-note <title> -- <new text>: Edit note text and update timestamp
+    - search-notes <query>: Search notes by title, text, or tags
     - phone <name>: Look up a contact's phone numbers
     - show-email <name>: Show email for a contact
     - show-address <name>: Show address for a contact
-    - show-notes: Show all notes (id and text)
+    - show-notes: Show all notes with Title, Text, Tags, Date
     - search <query>: Search contacts by any stored field
     - delete <name>: Remove a contact
     - all: Display all contacts in a formatted table
