@@ -28,3 +28,4 @@ def show_notes(notes_book: NotesBook) -> str:
         lines.append(f"  Note {i}: {note.text}")
 
     return "\n".join(lines)
+	

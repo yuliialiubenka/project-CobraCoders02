@@ -137,3 +137,4 @@ def load_notes(filename: str = "notes.pkl") -> NotesBook:
     # EOFError: file is empty/truncated (e.g., interrupted write)
     except (FileNotFoundError, pickle.UnpicklingError, EOFError):
         return NotesBook()
+		

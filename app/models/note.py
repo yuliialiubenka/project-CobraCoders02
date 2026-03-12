@@ -41,6 +41,7 @@ class Note:
         self.text: NoteText = NoteText(text)
 
     def __str__(self) -> str:
-        """Return string representation of the note."""
+        """Return note string with UUID and text for preise dentification."""
 
         return f"[{self.id}]  {self.text}"
+		

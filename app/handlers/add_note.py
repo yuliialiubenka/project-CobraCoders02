@@ -21,7 +21,7 @@ from app.validators import is_valid_note
 )
 def add_note(args: list[str], notes_book: NotesBook) -> str:
     """
-    Add a standalone note (max 50 characters). Stored in NotesBook.
+    Add a standalone note (1-50 characters). Stored in NotesBook.
 
     Args:
         args: List where args[0] is the validated, normalized note text.
@@ -32,3 +32,4 @@ def add_note(args: list[str], notes_book: NotesBook) -> str:
     """
     notes_book.add_note(args[0])
     return note_added_message()
+	
