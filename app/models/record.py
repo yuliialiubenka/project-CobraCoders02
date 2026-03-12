@@ -51,15 +51,6 @@ class Record:
         if not phone_found:
             raise PhoneNotFoundError(PHONE_NOT_FOUND_IN_RECORD.format(phone=old_phone))
 
-    def find_phone(self, phone: str) -> str | None:
-        """Find and return a phone number if it exists in the record."""
-
-        for p in self.phones:
-            if p.value == phone:
-                return p.value
-
-        return None
-
     def add_birthday(self, birthday: str) -> None:
         """Add a birthday to the record."""
 

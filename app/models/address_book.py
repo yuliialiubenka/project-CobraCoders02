@@ -9,6 +9,12 @@ from .record import Record
 class AddressBook(UserDict):
     """Class for storing records and managing contacts."""
 
+    @staticmethod
+    def _normalize_name(name: str) -> str:
+        """Normalize user-entered contact name for reliable lookups."""
+
+        return " ".join(word.title() for word in name.strip().split())
+
     def add_record(self, record: Record) -> None:
         """Add a record to the address book."""
 
@@ -17,8 +23,10 @@ class AddressBook(UserDict):
     def find(self, name: str) -> Record | None:
         """Find a record by name."""
 
+        normalized_name = self._normalize_name(name)
+
         for record in self.data.values():
-            if record.name.value.lower() == name.lower():
+            if record.name.value == normalized_name:
                 return record
         return None
 
@@ -28,36 +36,6 @@ class AddressBook(UserDict):
         record = self.find(name)
         if record:
             del self.data[record.id]
-
-    def search(self, query: str) -> list[Record]:
-        """Search contacts by name, phone, email, address, or birthday."""
-
-        normalized_query = query.strip().lower()
-        if not normalized_query:
-            return []
-
-        matches: list[Record] = []
-
-        for record in self.data.values():
-            searchable_fields = [record.name.value]
-            searchable_fields.extend(phone.value for phone in record.phones)
-
-            email = getattr(record, "email", None)
-            if email:
-                searchable_fields.append(email.value)
-
-            address = getattr(record, "address", None)
-            if address:
-                searchable_fields.append(address.value)
-
-            if record.birthday:
-                searchable_fields.append(record.birthday.value)
-
-            haystack = " ".join(searchable_fields).lower()
-            if normalized_query in haystack:
-                matches.append(record)
-
-        return sorted(matches, key=lambda record: record.name.value.lower())
 
     def get_upcoming_birthdays(self, days_ahead: int = 7) -> list[dict[str, str]]:
         """

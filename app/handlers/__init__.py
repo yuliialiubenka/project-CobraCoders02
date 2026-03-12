@@ -8,12 +8,16 @@ from .birthdays import birthdays
 from .change_contact import change_contact
 from .delete_contact import delete_contact
 from .execute_command import execute_command
-from .search_contacts import search_contacts
 from .show_all import show_all
 from .show_address import show_address
 from .show_birthday import show_birthday
 from .show_email import show_email
 from .show_phone import show_phone
+from .search_contacts import search_name
+from .search_contacts import search_phone
+from .search_contacts import search_email
+from .search_contacts import search_address
+from .search_contacts import search_birthday
 
 __all__ = [
     "add_address",
@@ -27,7 +31,11 @@ __all__ = [
     "add_birthday",
     "show_birthday",
     "show_email",
-    "search_contacts",
     "birthdays",
     "execute_command",
+    "search_name",
+    "search_phone",
+    "search_email",
+    "search_address",
+    "search_birthday",
 ]
