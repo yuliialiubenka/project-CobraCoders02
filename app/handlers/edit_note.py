@@ -6,6 +6,7 @@ from app.decorators import colored_output, input_error
 from app.messages import (
     error_invalid_delimiters_edit_note,
     error_invalid_note_text_format,
+    error_invalid_note_title_format,
     error_missing_delimiter_edit_note,
     error_missing_args_edit_note,
     note_not_found_message,
@@ -66,7 +67,7 @@ def edit_note(args: list[str], notes_book: NotesBook) -> str:
     title, text = _split_edit_note_parts(args)
 
     if not is_valid_note_title(title):
-        return error_invalid_note_text_format()
+        return error_invalid_note_title_format()
 
     if not is_valid_note_text(text):
         return error_invalid_note_text_format()
