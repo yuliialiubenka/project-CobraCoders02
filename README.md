@@ -72,7 +72,7 @@ Interactive console application for contact management with input validation and
 - `phone <name>` — show phone numbers for contact
 - `show-email <name>` — show email for contact
 - `show-address <name>` — show address for contact
-- `show-notes` — show all notes with id and text
+- `show-notes` — show all notes
 - `search <query>` — search contacts by name, phone, email, address, or birthday
 - `delete <name>` — delete contact from address book
 - `add-birthday <name> <birthday>` — add birthday to contact (DD.MM.YYYY format)
@@ -288,7 +288,7 @@ birthdays 30                 # Show upcoming in the next 30 days
 - **Max length:** 50 characters (after trimming)
 - **Empty:** Note text must be non-empty after stripping; otherwise validation fails
 - **Storage:** Notes are stored in `notes.pkl` as a list of dicts with `id` (UUID4) and `text`; not tied to contacts
-- **Commands:** `add-note <text>`, `show-notes` (ids shown in square brackets)
+- **Commands:** `add-note <text>`, `show-notes`
 
 ## Requirements
 

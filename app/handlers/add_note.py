@@ -1,33 +1,34 @@
-"""Handler for the add-note command. Notes are stored separately from contacts (notes.pkl)."""
+"""Handler for the add-note command. Notes are stored via NotesBook."""
 
-import uuid
-
-from app.decorators import colored_output, input_error
+from app.decorators import colored_output, input_error, validate_args
 from app.messages import (
     error_invalid_note_format,
     error_missing_args_add_note,
     note_added_message,
 )
-from app.models import AddressBook
-from app.storage import load_notes, save_notes
+from app.models import NotesBook
 from app.validators import is_valid_note
 
 
 @colored_output()
 @input_error
-def add_note(args: list[str], book: AddressBook) -> str:
-    """Add a standalone note (max 50 characters). Stored in notes.pkl with a UUID4 id."""
-    if not args:
-        return error_missing_args_add_note()
+@validate_args(
+    required_count=1,
+    validators={0: is_valid_note},
+    error_messages={0: error_invalid_note_format()},
+    normalize_args=True,
+    missing_args_message=error_missing_args_add_note(),
+)
+def add_note(args: list[str], notes_book: NotesBook) -> str:
+    """
+    Add a standalone note (max 50 characters). Stored in NotesBook.
 
-    note_text = " ".join(args).strip()
-    if not note_text:
-        return error_missing_args_add_note()
+    Args:
+        args: List where args[0] is the validated, normalized note text.
+        notes_book: NotesBook instance for storing notes.
 
-    if not is_valid_note(note_text):
-        return error_invalid_note_format()
-
-    notes = load_notes()
-    notes.append({"id": str(uuid.uuid4()), "text": note_text})
-    save_notes(notes)
+    Returns:
+        Success message.
+    """
+    notes_book.add_note(args[0])
     return note_added_message()

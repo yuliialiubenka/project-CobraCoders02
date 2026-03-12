@@ -35,6 +35,10 @@ class InvalidBirthdayError(FieldError):
     """Raised when birthday validation fails."""
 
 
+class InvalidNoteError(FieldError):
+    """Raised when note validation fails."""
+
+
 class RecordError(AddressBookError):
     """Base exception for record operations."""
 

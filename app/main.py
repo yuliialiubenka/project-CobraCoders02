@@ -7,7 +7,7 @@ from app.messages import (
     goodbye_message,
     prompt_for_command,
 )
-from app.storage import load_data, save_data
+from app.storage import load_data, save_data, load_notes, save_notes
 
 # Initialize colorama for Windows compatibility
 init(autoreset=True)
@@ -24,7 +24,7 @@ def main() -> None:
     - change <name> <old_phone> <new_phone>: Update phone number
     - add-email <name> <email>: Add or update contact email
     - add-address <name> <address>: Add or update contact address
-    - add-note <text>: Add a note (max 50 characters, stored in notes.pkl)
+    - add-note <text>: Add a note (max 50 characters)
     - phone <name>: Look up a contact's phone numbers
     - show-email <name>: Show email for a contact
     - show-address <name>: Show address for a contact
@@ -41,6 +41,7 @@ def main() -> None:
     """
 
     book = load_data()
+    notes_book = load_notes()
 
     print(welcome_message())
 
@@ -58,7 +59,7 @@ def main() -> None:
                 print(goodbye_message())
                 break
 
-            result = execute_command(command, args, book)
+            result = execute_command(command, args, book, notes_book)
 
             if result:  # Only print if there's a result
                 print(result)
@@ -68,6 +69,7 @@ def main() -> None:
         print(goodbye_message())
     finally:
         save_data(book)
+        save_notes(notes_book)
 
 
 # For testing purposes

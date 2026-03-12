@@ -1,8 +1,9 @@
 from typing import Callable
+from functools import partial
 
 from app.decorators import colored_output, input_error
 from app.messages import error_unexpected_arguments, hello_message
-from app.models import AddressBook
+from app.models import AddressBook, NotesBook
 
 from .add_address import add_address
 from .add_birthday import add_birthday
@@ -28,7 +29,9 @@ from .show_phone import show_phone
 
 @colored_output()
 @input_error
-def execute_command(command: str, args: list[str], book: AddressBook) -> str:
+def execute_command(
+    command: str, args: list[str], book: AddressBook, notes_book: NotesBook
+) -> str:
     """
     Execute a command by dispatching to appropriate handler.
 
@@ -36,6 +39,7 @@ def execute_command(command: str, args: list[str], book: AddressBook) -> str:
         command: Command name to execute.
         args: List of arguments for the command.
         book: AddressBook instance.
+        notes_book: NotesBook instance.
 
     Returns:
         Result string from command execution.
@@ -56,10 +60,10 @@ def execute_command(command: str, args: list[str], book: AddressBook) -> str:
         "delete": (delete_contact, "args_book"),
         "add-email": (add_email, "args_book"),
         "add-address": (add_address, "args_book"),
-        "add-note": (add_note, "args_book"),
+        "add-note": (add_note, "args_notes"),
         "show-email": (show_email, "args_book"),
         "show-address": (show_address, "args_book"),
-        "show-notes": (show_notes, "book"),
+        "show-notes": (show_notes, "notes"),
         "search": (search_contacts, "args_book"),
         "search-name": (search_name, "args_book"),
         "search-phone": (search_phone, "args_book"),
@@ -74,14 +78,22 @@ def execute_command(command: str, args: list[str], book: AddressBook) -> str:
     if command in commands:
         handler, mode = commands[command]
 
-        if mode == "none":
-            if args:
-                return error_unexpected_arguments(command)
-            return handler()
-        if mode == "book":
-            if args:
-                return error_unexpected_arguments(command)
-            return handler(book)
-        return handler(args, book)
+        # Check for unexpected arguments in no-args modes
+        if mode in ("none", "book", "notes", "book_notes") and args:
+            return error_unexpected_arguments(command)
+
+        # Dynamic dispatch based on mode
+        dispatch_map: dict[str, Callable[[], str]] = {
+            "none": partial(handler),
+            "book": partial(handler, book),
+            "notes": partial(handler, notes_book),
+            "args_book": partial(handler, args, book),
+            "args_notes": partial(handler, args, notes_book),
+            "args_book_notes": partial(handler, args, book, notes_book),
+            "book_notes": partial(handler, book, notes_book),
+        }
+
+        if mode in dispatch_map:
+            return dispatch_map[mode]()
 
     raise KeyError("unknown_command")

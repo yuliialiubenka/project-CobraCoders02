@@ -11,12 +11,15 @@ from .exceptions import (
     InvalidBirthdayError,
     InvalidEmailError,
     InvalidNameError,
+    InvalidNoteError,
     InvalidPhoneError,
     PhoneNotFoundError,
     RecordError,
 )
 from .field import Field
 from .name import Name
+from .note import Note
+from .notes_book import NotesBook
 from .phone import Phone
 from .record import Record
 
@@ -32,8 +35,11 @@ __all__ = [
     "InvalidBirthdayError",
     "InvalidEmailError",
     "InvalidNameError",
+    "InvalidNoteError",
     "InvalidPhoneError",
     "Name",
+    "Note",
+    "NotesBook",
     "Phone",
     "PhoneNotFoundError",
     "Record",
