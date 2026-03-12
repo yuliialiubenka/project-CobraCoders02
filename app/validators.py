@@ -83,6 +83,24 @@ def is_valid_address(address: str) -> bool:
     return any(char.isalnum() for char in trimmed)
 
 
+def is_valid_note(note: str) -> bool:
+    """
+    Validate note text for add-note command.
+
+    Note must be non-empty after stripping and at most 50 characters.
+
+    Args:
+        note: Note string to validate.
+
+    Returns:
+        True if note is valid, False otherwise.
+    """
+    if not isinstance(note, str):
+        return False
+    trimmed = note.strip()
+    return 0 < len(trimmed) <= 50
+
+
 def is_valid_name(name: str) -> bool:
     """
     Validate contact name format.

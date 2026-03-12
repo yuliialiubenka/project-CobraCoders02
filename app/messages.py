@@ -17,18 +17,21 @@ from app.message_texts import (
     INVALID_ADDRESS_FORMAT,
     INVALID_BIRTHDAY_FORMAT,
     INVALID_DAYS_FORMAT,
+    INVALID_NOTE_FORMAT,
     WELCOME_MESSAGE,
     HELLO_MESSAGE,
     GOODBYE_MESSAGE,
     ERROR_UNEXPECTED_ARGUMENTS,
     PROMPT_FOR_COMMAND,
     NO_CONTACTS_FOUND,
+    NO_NOTES_FOUND,
     BIRTHDAY_ADDED,
     EMAIL_ADDED,
     EMAIL_UPDATED,
     ADDRESS_ADDED,
     ADDRESS_UPDATED,
     CONTACT_DELETED,
+    NOTE_ADDED,
     NO_EMAIL_FOUND,
     NO_ADDRESS_FOUND,
     NO_MATCHING_CONTACTS,
@@ -39,6 +42,7 @@ from app.message_texts import (
     INPUT_ERROR_MISSING_DELIMITER_ADD_ADDRESS,
     INPUT_ERROR_MISSING_ARGS_DELETE,
     INPUT_ERROR_MISSING_ARGS_SEARCH,
+    INPUT_ERROR_MISSING_ARGS_ADD_NOTE,
 )
 
 
@@ -126,6 +130,18 @@ def error_missing_args_search() -> str:
     return INPUT_ERROR_MISSING_ARGS_SEARCH
 
 
+@output_formatter(color=Fore.RED)
+def error_missing_args_add_note() -> str:
+    """Return error message for missing arguments in add-note command."""
+    return INPUT_ERROR_MISSING_ARGS_ADD_NOTE
+
+
+@output_formatter(color=Fore.RED)
+def error_invalid_note_format() -> str:
+    """Return error message for invalid note format (empty or over 50 characters)."""
+    return INVALID_NOTE_FORMAT
+
+
 @output_formatter(color=Fore.YELLOW)
 def prompt_for_command() -> str:
     """Return prompt message for requesting a command."""
@@ -136,6 +152,12 @@ def prompt_for_command() -> str:
 def no_contacts_found_message() -> str:
     """Return message when there are no contacts."""
     return NO_CONTACTS_FOUND
+
+
+@output_formatter(color=Fore.BLUE)
+def no_notes_found_message() -> str:
+    """Return message when there are no notes."""
+    return NO_NOTES_FOUND
 
 
 @output_formatter(color=Fore.RED)
@@ -172,6 +194,12 @@ def address_saved_message(updated: bool = False) -> str:
 def contact_deleted_message() -> str:
     """Return success message when contact is deleted."""
     return CONTACT_DELETED
+
+
+@output_formatter(color=Fore.GREEN)
+def note_added_message() -> str:
+    """Return success message when a note is saved."""
+    return NOTE_ADDED
 
 
 @output_formatter(color=Fore.BLUE)
