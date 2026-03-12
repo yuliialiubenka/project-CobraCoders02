@@ -67,7 +67,7 @@ Interactive console application for contact management with input validation and
 - `add <name> <phone>` — add contact with phone number (or add phone to existing contact)
 - `change <name> <old_phone> <new_phone>` — change existing phone number
 - `add-email <name> <email>` — add or update contact email
-- `add-address <name> <address>` — add or update contact address
+- `add-address <name> -- <address>` — add or update contact address (separator is required)
 - `add-note <text>` — add a standalone note (max 50 characters; stored in notes.pkl)
 - `phone <name>` — show phone numbers for contact
 - `show-email <name>` — show email for contact
@@ -95,7 +95,7 @@ python -m app.main
 REM In interactive mode:
 >>> add John 0501234567
 >>> add-email John john@example.com
->>> add-address John 12 Main Street, Kyiv
+>>> add-address John -- 12 Main Street, Kyiv
 >>> phone John
 >>> change John 0501234567 0509876543
 >>> search example.com
@@ -280,7 +280,8 @@ birthdays 30                 # Show upcoming in the next 30 days
 
 - **Min length:** 5 characters
 - **Allowed:** letters, digits, spaces, commas, dots, slashes, hyphens, apostrophes, `#`
-- **Smart parsing:** `add-address` can work without quotes (it detects contact name first)
+- **Required separator:** use `--` between name and address
+- **Example:** `add-address John Smith -- 12 Main Street, Kyiv`
 
 ### Notes
 

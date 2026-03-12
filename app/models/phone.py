@@ -21,11 +21,11 @@ class Phone(Field):
             raise InvalidPhoneError(INVALID_PHONE_FORMAT)
 
         # Then normalize it to local format (10 digits)
-        normalized: str = self._normalize(value)
+        normalized: str = self.normalize(value)
         super().__init__(normalized)
 
     @staticmethod
-    def _normalize(phone: str) -> str:
+    def normalize(phone: str) -> str:
         """Extract digits to get local format (10 digits)."""
 
         if not isinstance(phone, str):

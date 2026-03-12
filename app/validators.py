@@ -71,10 +71,12 @@ def is_valid_address(address: str) -> bool:
         return False
 
     trimmed = address.strip()
+
     if len(trimmed) < 5:
         return False
 
     allowed_symbols = " .,/#-'"
+
     if not all(char.isalnum() or char in allowed_symbols for char in trimmed):
         return False
 
@@ -123,6 +125,7 @@ def is_valid_name(name: str) -> bool:
         >>> is_valid_name("123")
         False
     """
+
     trimmed = name.strip()
 
     if len(trimmed) < 2:
@@ -171,6 +174,7 @@ def is_valid_birthday(birthday: str) -> bool:
         >>> is_valid_birthday("25/12/1990")  # Wrong separator
         False
     """
+
     if not isinstance(birthday, str):
         return False
 

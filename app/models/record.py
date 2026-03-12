@@ -1,5 +1,7 @@
 """Record class for storing contact information."""
 
+from uuid import UUID, uuid4
+
 from app.message_texts import PHONE_NOT_FOUND_IN_RECORD
 
 from .address import Address
@@ -16,6 +18,7 @@ class Record:
     def __init__(self, name: str) -> None:
         """Initialize record with contact name."""
 
+        self.id: UUID = uuid4()
         self.name: Name = Name(name)
         self.phones: list[Phone] = []
         self.email: Email | None = None
@@ -30,15 +33,17 @@ class Record:
     def remove_phone(self, phone: str) -> None:
         """Remove a phone number from the record."""
 
-        self.phones = [p for p in self.phones if p.value != phone]
+        normalized = Phone.normalize(phone)
+        self.phones = [p for p in self.phones if p.value != normalized]
 
     def edit_phone(self, old_phone: str, new_phone: str) -> None:
         """Edit an existing phone number in the record."""
 
+        normalized_old = Phone.normalize(old_phone)
         phone_found: bool = False
 
         for i, phone in enumerate(self.phones):
-            if phone.value == old_phone:
+            if phone.value == normalized_old:
                 self.phones[i] = Phone(new_phone)
                 phone_found = True
                 break
