@@ -10,6 +10,9 @@ from .add_birthday import add_birthday
 from .add_contact import add_contact
 from .add_email import add_email
 from .add_note import add_note
+from .delete_note import delete_note
+from .edit_note import edit_note
+from .search_notes import search_notes
 from .birthdays import birthdays
 from .change_contact import change_contact
 from .delete_contact import delete_contact
@@ -61,6 +64,9 @@ def execute_command(
         "add-email": (add_email, "args_book"),
         "add-address": (add_address, "args_book"),
         "add-note": (add_note, "args_notes"),
+        "delete-note": (delete_note, "args_notes"),
+        "edit-note": (edit_note, "args_notes"),
+        "search-notes": (search_notes, "args_notes"),
         "show-email": (show_email, "args_book"),
         "show-address": (show_address, "args_book"),
         "show-notes": (show_notes, "notes"),
@@ -79,7 +85,7 @@ def execute_command(
         handler, mode = commands[command]
 
         # Check for unexpected arguments in no-args modes
-        if mode in ("none", "book", "notes", "book_notes") and args:
+        if mode in ("none", "book", "notes") and args:
             return error_unexpected_arguments(command)
 
         # Dynamic dispatch based on mode
@@ -89,8 +95,6 @@ def execute_command(
             "notes": partial(handler, notes_book),
             "args_book": partial(handler, args, book),
             "args_notes": partial(handler, args, notes_book),
-            "args_book_notes": partial(handler, args, book, notes_book),
-            "book_notes": partial(handler, book, notes_book),
         }
 
         if mode in dispatch_map:
