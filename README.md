@@ -6,6 +6,8 @@ This project contains a CLI contact assistant bot with OOP address book models a
 
 ### 1. Create Virtual Environment
 
+Optional on Windows if you use `run-cobra.cmd` or `run-cobra.ps1`: both scripts can create `.venv` automatically on first run.
+
 ```cmd
 python -m venv .venv
 ```
@@ -30,17 +32,85 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 4. Run the CLI Bot
+### 4. Install Local CLI Command
+
+```cmd
+pip install -e .
+```
+
+### 5. Run the CLI Bot
+
+```cmd
+cobra
+```
+
+```bash
+cobra
+```
+
+Legacy command (also supported):
 
 ```cmd
 python -m app.main
 ```
 
-```bash
-python -m app.main
+**Windows shortcut (without manual activation):**
+
+Recommended: double-click `run-cobra.cmd` in File Explorer.
+
+```powershell
+.\run-cobra.ps1
 ```
 
-### 5. Run Tests
+```cmd
+run-cobra.cmd
+```
+
+### 5.1 How to run `run-cobra.cmd` (Windows)
+
+Use this if you want the easiest start command on Windows.
+
+Option A (by click):
+
+1. Open the project folder in File Explorer.
+2. Double-click `run-cobra.cmd`.
+
+Option B (from terminal):
+
+1. Open **Command Prompt**.
+2. Go to the project folder:
+
+```cmd
+cd D:\Neoversity\Hometasks\project-CobraCoders02
+```
+
+3. Run:
+
+```cmd
+run-cobra.cmd
+```
+
+What this script does automatically:
+
+- creates `.venv` automatically if it does not exist yet;
+- if `cobra` is not installed yet, runs `pip install -e .` inside `.venv`;
+- starts the bot.
+
+Requirement: Python 3.12+ must be installed and available as `py` or `python` in `PATH`.
+
+To exit the bot, type:
+
+```text
+exit
+```
+
+PowerShell alternative:
+
+```powershell
+.\run-cobra.cmd
+```
+
+### 6. Run Tests
 
 ```cmd
 python test_add_users.py
@@ -90,7 +160,7 @@ Interactive console application for contact management with input validation and
 **Usage Examples:**
 
 ```cmd
-python -m app.main
+cobra
 
 REM In interactive mode:
 >>> add John 0501234567
