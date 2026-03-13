@@ -152,6 +152,11 @@ EMAIL_UPDATED = "Email updated."
 ADDRESS_ADDED = "Address added."
 ADDRESS_UPDATED = "Address updated."
 NOTE_ADDED = "Note saved."
+NOTE_DUPLICATE_TITLE = (
+    "A note with this title already exists.\n"
+    "Use 'edit-note {title} -- [new text]' to update it, "
+    "or choose a different title."
+)
 NOTE_UPDATED = "Note updated."
 NOTE_DELETED = "Note deleted."
 NOTE_NOT_FOUND = "Note not found."

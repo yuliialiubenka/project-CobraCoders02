@@ -58,6 +58,7 @@ from app.message_texts import (
     INPUT_ERROR_MISSING_DELIMITER_EDIT_NOTE,
     INPUT_ERROR_INVALID_DELIMITERS_EDIT_NOTE,
     NOTE_DELETED,
+    NOTE_DUPLICATE_TITLE,
     NOTE_UPDATED,
     NOTE_NOT_FOUND,
     NO_MATCHING_NOTES,
@@ -304,6 +305,12 @@ def contact_deleted_message() -> str:
 def note_added_message() -> str:
     """Return success message when a note is saved."""
     return NOTE_ADDED
+
+
+@output_formatter(color=Fore.RED)
+def error_duplicate_note_title(title: str) -> str:
+    """Return error message when a note with given title already exists."""
+    return NOTE_DUPLICATE_TITLE.format(title=title)
 
 
 @output_formatter(color=Fore.GREEN)
