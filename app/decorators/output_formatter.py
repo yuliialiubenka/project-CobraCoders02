@@ -22,20 +22,6 @@ def _is_structured_message(message: str) -> bool:
     return any(line and set(line) <= {"=", "-", "+"} for line in lines)
 
 
-def _apply_speaker_prefix(message: str, speaker: str | None) -> str:
-    """Prefix regular bot messages while leaving structured blocks untouched."""
-
-    if not speaker or _is_structured_message(message):
-        return message
-
-    lines = message.splitlines()
-    if not lines:
-        return message
-
-    lines[0] = f"{speaker}: {lines[0]}"
-    return "\n".join(lines)
-
-
 def output_formatter(
     color: str = Fore.WHITE,
     bold: bool = False,
@@ -67,8 +53,10 @@ def output_formatter(
         def wrapper(*args: object, **kwargs: object) -> str:
             result = func(*args, **kwargs)
             style = Style.BRIGHT if bold else ""
-            formatted_result = _apply_speaker_prefix(result, speaker)
-            return f"{style}{color}{formatted_result}{Style.RESET_ALL}"
+            if speaker and not _is_structured_message(result):
+                prefix = f"{Fore.CYAN}{style}{speaker}:{Style.RESET_ALL} "
+                return prefix + f"{style}{color}{result}{Style.RESET_ALL}"
+            return f"{style}{color}{result}{Style.RESET_ALL}"
 
         return wrapper
 

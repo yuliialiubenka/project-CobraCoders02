@@ -78,7 +78,7 @@ def startup_greeting_message() -> str:
     return STARTUP_GREETING_MESSAGE
 
 
-@output_formatter(color=Fore.GREEN)
+@output_formatter(color=Fore.CYAN)
 def hello_message() -> str:
     """Return greeting message."""
     return HELLO_MESSAGE

@@ -134,8 +134,8 @@ Interactive console application for contact management with input validation and
 **Available Commands:**
 
 - `hello` — greeting
-- `add <name> <phone>` — add contact with phone number (or add phone to existing contact)
-- `change <name> <old_phone> <new_phone>` — change existing phone number
+- `add-phone <name> <phone>` — add contact with phone number (or add phone to existing contact)
+- `change-phone <name> <old_phone> <new_phone>` — change existing phone number
 - `add-email <name> <email>` — add or update contact email
 - `add-address <name> -- <address>` — add or update contact address (separator is required)
 - `add-note <text>` — add a standalone note (max 50 characters; stored in notes.pkl)
@@ -143,12 +143,12 @@ Interactive console application for contact management with input validation and
 - `show-email <name>` — show email for contact
 - `show-address <name>` — show address for contact
 - `show-notes` — show all notes
-- `search <query>` — search contacts by name, phone, email, address, or birthday
-- `delete <name>` — delete contact from address book
+- `search-contact <query>` — search contacts by name, phone, email, address, or birthday
+- `delete-contact <name>` — delete contact from address book
 - `add-birthday <name> <birthday>` — add birthday to contact (DD.MM.YYYY format)
 - `show-birthday <name>` — show birthday for contact
 - `birthdays [days]` — show contacts with upcoming birthdays (default: next 7 days)
-- `all` — show all contacts with details
+- `show-contacts` — show all contacts with details
 - `close` / `exit` — exit program
 
 **Phone Format:**
@@ -163,14 +163,14 @@ Interactive console application for contact management with input validation and
 cobra
 
 REM In interactive mode:
->>> add John 0501234567
+>>> add-phone John 0501234567
 >>> add-email John john@example.com
 >>> add-address John -- 12 Main Street, Kyiv
 >>> phone John
->>> change John 0501234567 0509876543
->>> search example.com
+>>> change-phone John 0501234567 0509876543
+>>> search-contact example.com
 >>> birthdays 30
->>> all
+>>> show-contacts
 >>> close
 ```
 

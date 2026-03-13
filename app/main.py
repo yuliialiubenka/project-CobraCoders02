@@ -21,8 +21,8 @@ def main() -> None:
     Provides an interactive command-line interface for managing contacts.
     Supported commands:
     - hello: Display greeting
-    - add <name> <phone>: Add a new contact
-    - change <name> <old_phone> <new_phone>: Update phone number
+    - add-phone <name> <phone>: Add a new contact
+    - change-phone <name> <old_phone> <new_phone>: Update phone number
     - add-email <name> <email>: Add or update contact email
     - add-address <name> <address>: Add or update contact address
     - add-note <title> -- <text> -- <tag1, tag2>: Add a note with optional tags
@@ -33,9 +33,9 @@ def main() -> None:
     - show-email <name>: Show email for a contact
     - show-address <name>: Show address for a contact
     - show-notes: Show all notes in a table (Title, Text, Tags if present, Date)
-    - search <query>: Search contacts by any stored field
-    - delete <name>: Remove a contact
-    - all: Display all contacts in a formatted table
+    - search-contact <query>: Search contacts by any stored field
+    - delete-contact <name>: Remove a contact
+    - show-contacts: Display all contacts in a formatted table
     - add-birthday <name> <date>: Add birthday (DD.MM.YYYY)
     - show-birthday <name>: Show birthday for a contact
     - birthdays [days]: Show upcoming birthdays (default: next 7 days)

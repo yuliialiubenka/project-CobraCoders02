@@ -3,7 +3,7 @@ from typing import Callable
 
 from colorama import Fore, Style
 
-from app.decorators.output_formatter import _apply_speaker_prefix
+from app.decorators.output_formatter import _is_structured_message
 
 
 def colored_output(
@@ -58,12 +58,13 @@ def colored_output(
                 else:
                     color = info_color
 
-                formatted_result = _apply_speaker_prefix(result, speaker)
-            else:
-                color = info_color
-                formatted_result = result
+                if speaker and not _is_structured_message(result):
+                    prefix = f"{Fore.CYAN}{speaker}:{Style.RESET_ALL} "
+                    return prefix + f"{color}{result}{Style.RESET_ALL}"
+                return f"{color}{result}{Style.RESET_ALL}"
 
-            return f"{color}{formatted_result}{Style.RESET_ALL}"
+            color = info_color
+            return f"{color}{result}{Style.RESET_ALL}"
 
         return wrapper
 
