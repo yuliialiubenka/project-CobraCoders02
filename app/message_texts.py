@@ -59,11 +59,11 @@ INPUT_ERROR_CONTACT_NOT_FOUND = "Contact not found."
 INPUT_ERROR_ENTER_NAME = "Enter user name."
 
 UNKNOWN_COMMAND = (
-    "Unknown command. Try: hello, add, change, phone, all, delete, "
+    "Unknown command. Try: help to see all commands. Or one of this: hello, add, change, phone, all, delete, "
     "add-email, add-address, add-note, show-email, show-address, show-notes, search, "
     "search-name, search-phone, search-email, search-address, search-birthday, "
     "add-birthday, show-birthday, birthdays, "
-    "delete-note, edit-note, search-notes, help, close, exit"
+    "delete-note, edit-note, search-notes, close, exit"
 )
 
 HELP_COMMANDS: list[tuple[str, str]] = [
@@ -91,7 +91,7 @@ HELP_COMMANDS: list[tuple[str, str]] = [
     ("add-birthday <name> <DD.MM.YYYY>", "Add birthday to a contact"),
     ("show-birthday <name>", "Show birthday for a contact"),
     ("birthdays [days]", "Show upcoming birthdays (default: 7 days)"),
-    ("help", "Show this help message"),
+	("help", "Show this help message"),
     ("close / exit", "Exit the program"),
 ]
 
