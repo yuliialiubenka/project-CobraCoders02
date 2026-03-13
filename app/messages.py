@@ -17,7 +17,9 @@ from app.message_texts import (
     INVALID_ADDRESS_FORMAT,
     INVALID_BIRTHDAY_FORMAT,
     INVALID_DAYS_FORMAT,
-    INVALID_NOTE_FORMAT,
+    INVALID_NOTE_TAGS_FORMAT,
+    INVALID_NOTE_TEXT_FORMAT,
+    INVALID_NOTE_TITLE_FORMAT,
     WELCOME_MESSAGE,
     HELLO_MESSAGE,
     GOODBYE_MESSAGE,
@@ -43,6 +45,17 @@ from app.message_texts import (
     INPUT_ERROR_MISSING_ARGS_DELETE,
     INPUT_ERROR_MISSING_ARGS_SEARCH,
     INPUT_ERROR_MISSING_ARGS_ADD_NOTE,
+    INPUT_ERROR_MISSING_DELIMITER_ADD_NOTE,
+    INPUT_ERROR_INVALID_DELIMITERS_ADD_NOTE,
+    INPUT_ERROR_MISSING_ARGS_DELETE_NOTE,
+    INPUT_ERROR_MISSING_ARGS_SEARCH_NOTES,
+    INPUT_ERROR_MISSING_ARGS_EDIT_NOTE,
+    INPUT_ERROR_MISSING_DELIMITER_EDIT_NOTE,
+    INPUT_ERROR_INVALID_DELIMITERS_EDIT_NOTE,
+    NOTE_DELETED,
+    NOTE_UPDATED,
+    NOTE_NOT_FOUND,
+    NO_MATCHING_NOTES,
 )
 
 
@@ -137,9 +150,33 @@ def error_missing_args_add_note() -> str:
 
 
 @output_formatter(color=Fore.RED)
-def error_invalid_note_format() -> str:
-    """Return error message for invalid note format (empty or over 50 characters)."""
-    return INVALID_NOTE_FORMAT
+def error_missing_delimiter_add_note() -> str:
+    """Return error message for missing '--' delimiter in add-note command."""
+    return INPUT_ERROR_MISSING_DELIMITER_ADD_NOTE
+
+
+@output_formatter(color=Fore.RED)
+def error_invalid_delimiters_add_note() -> str:
+    """Return error message for too many '--' delimiters in add-note command."""
+    return INPUT_ERROR_INVALID_DELIMITERS_ADD_NOTE
+
+
+@output_formatter(color=Fore.RED)
+def error_invalid_note_title_format() -> str:
+    """Return error message for invalid note title format."""
+    return INVALID_NOTE_TITLE_FORMAT
+
+
+@output_formatter(color=Fore.RED)
+def error_invalid_note_text_format() -> str:
+    """Return error message for invalid note text format."""
+    return INVALID_NOTE_TEXT_FORMAT
+
+
+@output_formatter(color=Fore.RED)
+def error_invalid_note_tags_format() -> str:
+    """Return error message for invalid note tags format."""
+    return INVALID_NOTE_TAGS_FORMAT
 
 
 @output_formatter(color=Fore.YELLOW)
@@ -200,6 +237,60 @@ def contact_deleted_message() -> str:
 def note_added_message() -> str:
     """Return success message when a note is saved."""
     return NOTE_ADDED
+
+
+@output_formatter(color=Fore.GREEN)
+def note_deleted_message() -> str:
+    """Return success message when a note is deleted."""
+    return NOTE_DELETED
+
+
+@output_formatter(color=Fore.BLUE)
+def note_not_found_message() -> str:
+    """Return message when a note is not found by title."""
+    return NOTE_NOT_FOUND
+
+
+@output_formatter(color=Fore.BLUE)
+def no_matching_notes_message() -> str:
+    """Return message when note search returns no results."""
+    return NO_MATCHING_NOTES
+
+
+@output_formatter(color=Fore.RED)
+def error_missing_args_delete_note() -> str:
+    """Return error message for missing arguments in delete-note command."""
+    return INPUT_ERROR_MISSING_ARGS_DELETE_NOTE
+
+
+@output_formatter(color=Fore.RED)
+def error_missing_args_search_notes() -> str:
+    """Return error message for missing arguments in search-notes command."""
+    return INPUT_ERROR_MISSING_ARGS_SEARCH_NOTES
+
+
+@output_formatter(color=Fore.RED)
+def error_missing_args_edit_note() -> str:
+    """Return error message for missing arguments in edit-note command."""
+    return INPUT_ERROR_MISSING_ARGS_EDIT_NOTE
+
+
+@output_formatter(color=Fore.RED)
+def error_missing_delimiter_edit_note() -> str:
+    """Return error message for missing '--' delimiter in edit-note command."""
+    return INPUT_ERROR_MISSING_DELIMITER_EDIT_NOTE
+
+
+@output_formatter(color=Fore.RED)
+def error_invalid_delimiters_edit_note() -> str:
+    """Return error message for invalid '--' delimiters in edit-note command."""
+    return INPUT_ERROR_INVALID_DELIMITERS_EDIT_NOTE
+
+
+@output_formatter(color=Fore.GREEN)
+def note_updated_message() -> str:
+    """Return success message when a note is updated."""
+    return NOTE_UPDATED
 
 
 @output_formatter(color=Fore.BLUE)

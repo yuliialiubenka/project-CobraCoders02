@@ -25,5 +25,5 @@ htmlcov/
 Thumbs.db
 
 # Local app data
-addressbook.pkl
+*.pkl
 pullrequests-list.txt

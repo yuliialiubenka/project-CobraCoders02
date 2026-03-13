@@ -9,16 +9,18 @@ from .note import Note
 class NotesBook(UserDict):
     """Class for storing notes and managing note collection."""
 
-    def add_note(self, text: str) -> Note:
+    def add_note(self, title: str, text: str, tags: list[str] | None = None) -> Note:
         """Add a note and return the created Note.
 
         Args:
+            title: Note title.
             text: Note text content.
+            tags: Optional list of tags.
 
         Returns:
             The newly created Note instance.
         """
-        note = Note(text)
+        note = Note(title, text, tags)
         self.data[note.id] = note
 
         return note
@@ -37,19 +39,25 @@ class NotesBook(UserDict):
             return True
         return False
 
-    def find(self, note_id: UUID) -> Note | None:
-        """Find a note by UUID.
+    def find(self, title: str) -> Note | None:
+        """Find the first note matching the given title (case-insensitive).
 
         Args:
-            note_id: UUID of the note to find.
+            title: Note title to search for.
 
         Returns:
-            The Note if found, None otherwise.
+            The first matching Note if found, None otherwise.
         """
-        return self.data.get(note_id)
+        normalized = title.strip().lower()
+
+        for note in self.data.values():
+            if note.title.value.lower() == normalized:
+                return note
+
+        return None
 
     def search(self, query: str) -> list[Note]:
-        """Search notes by text content.
+        """Search notes by title, text, or tags.
 
         Args:
             query: Search query string.
@@ -65,6 +73,8 @@ class NotesBook(UserDict):
         matches = [
             note
             for note in self.data.values()
-            if normalized_query in note.text.value.lower()
+            if normalized_query in note.title.value.lower()
+            or normalized_query in note.text.value.lower()
+            or any(normalized_query in tag.lower() for tag in note.tags)
         ]
         return matches

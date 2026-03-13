@@ -13,6 +13,10 @@ from .show_address import show_address
 from .show_birthday import show_birthday
 from .show_email import show_email
 from .show_phone import show_phone
+from .delete_note import delete_note
+from .edit_note import edit_note
+from .search_notes import search_notes
+from .show_notes import show_notes
 from .search_contacts import search_name
 from .search_contacts import search_phone
 from .search_contacts import search_email
@@ -32,6 +36,10 @@ __all__ = [
     "show_birthday",
     "show_email",
     "birthdays",
+    "delete_note",
+    "edit_note",
+    "search_notes",
+    "show_notes",
     "execute_command",
     "search_name",
     "search_phone",
