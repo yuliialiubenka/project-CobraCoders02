@@ -1,11 +1,12 @@
 """Handler for the show-notes command. Displays all notes from NotesBook."""
 
 from datetime import datetime
+from typing import Literal
 
 from colorama import Fore
 
 from app.decorators import colored_output, input_error
-from app.messages import no_notes_found_message
+from app.messages import error_unexpected_arguments, no_notes_found_message
 from app.models import Note, NotesBook
 
 
@@ -55,21 +56,38 @@ def format_note_records(
 
 @colored_output(success_color=Fore.BLUE, info_color=Fore.BLUE)
 @input_error
-def show_notes(notes_book: NotesBook) -> str:
+def show_notes(notes_book: NotesBook, args: list[str] | None = None) -> str:
     """
     Display all notes in a formatted vertical table.
 
-    Notes are sorted oldest-first so the most recently added note
-    appears closest to the input prompt.
+    Notes can be sorted by date (oldest-first, default) or by title
+    (alphabetically, case-insensitive). Use optional argument "title"
+    to sort by title: show-notes title.
 
     Args:
         notes_book: NotesBook instance containing notes.
+        args: Optional list; if first element is "title", sort by title.
 
     Returns:
         Formatted vertical table string with note entries.
     """
+    sort_by: Literal["date", "title"] = "date"
+    if args:
+        if len(args) != 1 or args[0].lower() != "title":
+            return error_unexpected_arguments("show-notes")
+        sort_by = "title"
+
     if not notes_book.data:
         return no_notes_found_message()
 
-    sorted_notes = sorted(notes_book.data.values(), key=lambda note: note.created_at)
+    if sort_by == "title":
+        sorted_notes = sorted(
+            notes_book.data.values(),
+            key=lambda note: note.title.value.lower(),
+        )
+    else:
+        sorted_notes = sorted(
+            notes_book.data.values(),
+            key=lambda note: note.created_at,
+        )
     return format_note_records(sorted_notes)
