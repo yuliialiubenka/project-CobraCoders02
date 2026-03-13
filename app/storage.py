@@ -70,7 +70,16 @@ def load_data(filename: str = "addressbook.pkl") -> AddressBook:
     # FileNotFoundError: file does not exist yet (first app run)
     # pickle.UnpicklingError: file content is not a valid pickle stream
     # EOFError: file is empty/truncated (e.g., interrupted write)
-    except (FileNotFoundError, pickle.UnpicklingError, EOFError):
+    # AttributeError/ModuleNotFoundError/ImportError: legacy pickle references
+    # classes that no longer exist in current code.
+    except (
+        FileNotFoundError,
+        pickle.UnpicklingError,
+        EOFError,
+        AttributeError,
+        ModuleNotFoundError,
+        ImportError,
+    ):
         return AddressBook()
 
 
@@ -135,5 +144,14 @@ def load_notes(filename: str = "notes.pkl") -> NotesBook:
     # FileNotFoundError: file does not exist yet (first app run)
     # pickle.UnpicklingError: file content is not a valid pickle stream
     # EOFError: file is empty/truncated (e.g., interrupted write)
-    except (FileNotFoundError, pickle.UnpicklingError, EOFError):
+    # AttributeError/ModuleNotFoundError/ImportError: legacy pickle references
+    # classes that no longer exist in current code.
+    except (
+        FileNotFoundError,
+        pickle.UnpicklingError,
+        EOFError,
+        AttributeError,
+        ModuleNotFoundError,
+        ImportError,
+    ):
         return NotesBook()
