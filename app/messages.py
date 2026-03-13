@@ -58,6 +58,8 @@ from app.message_texts import (
     NOTE_NOT_FOUND,
     NO_MATCHING_NOTES,
     HELP_COMMANDS,
+    NO_TAG_FOUND,
+    INVALID_TAG_FORMAT
 )
 
 
@@ -336,3 +338,22 @@ def no_matching_contacts_message() -> str:
 def no_upcoming_birthdays_message(days: int = 7) -> str:
     """Return message when there are no upcoming birthdays."""
     return NO_UPCOMING_BIRTHDAYS.format(days=days)
+
+@output_formatter(color=Fore.BLUE)
+def no_tag_found_message() -> str:
+    """Return message when there are no tag."""
+    return NO_TAG_FOUND
+
+@output_formatter(color=Fore.BLUE)
+def invalid_tag() -> str:
+    """Return message when there are no tag."""
+    return INVALID_TAG_FORMAT
+@output_formatter(color=Fore.BLUE)
+def no_tag_found_message() -> str:
+    """Return message when there are no tag."""
+    return NO_TAG_FOUND
+
+@output_formatter(color=Fore.BLUE)
+def invalid_tag() -> str:
+    """Return message when there are no tag."""
+    return INVALID_TAG_FORMAT
