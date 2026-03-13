@@ -57,12 +57,15 @@ from app.message_texts import (
     INPUT_ERROR_MISSING_ARGS_EDIT_NOTE,
     INPUT_ERROR_MISSING_DELIMITER_EDIT_NOTE,
     INPUT_ERROR_INVALID_DELIMITERS_EDIT_NOTE,
+    INPUT_ERROR_INVALID_SORT_SHOW_NOTES,
     NOTE_DELETED,
     NOTE_DUPLICATE_TITLE,
     NOTE_UPDATED,
     NOTE_NOT_FOUND,
     NO_MATCHING_NOTES,
     HELP_COMMANDS,
+    NO_TAG_FOUND,
+    INVALID_TAG_FORMAT
 )
 
 
@@ -230,6 +233,12 @@ def error_invalid_delimiters_add_note() -> str:
 
 
 @output_formatter(color=Fore.RED)
+def error_invalid_sort_show_notes() -> str:
+    """Return error message for unsupported sort option in show-notes command."""
+    return INPUT_ERROR_INVALID_SORT_SHOW_NOTES
+
+
+@output_formatter(color=Fore.RED)
 def error_invalid_note_title_format() -> str:
     """Return error message for invalid note title format."""
     return INVALID_NOTE_TITLE_FORMAT
@@ -389,3 +398,22 @@ def no_matching_contacts_message() -> str:
 def no_upcoming_birthdays_message(days: int = 7) -> str:
     """Return message when there are no upcoming birthdays."""
     return NO_UPCOMING_BIRTHDAYS.format(days=days)
+
+@output_formatter(color=Fore.BLUE)
+def no_tag_found_message() -> str:
+    """Return message when there are no tag."""
+    return NO_TAG_FOUND
+
+@output_formatter(color=Fore.BLUE)
+def invalid_tag() -> str:
+    """Return message when there are no tag."""
+    return INVALID_TAG_FORMAT
+@output_formatter(color=Fore.BLUE)
+def no_tag_found_message() -> str:
+    """Return message when there are no tag."""
+    return NO_TAG_FOUND
+
+@output_formatter(color=Fore.BLUE)
+def invalid_tag() -> str:
+    """Return message when there are no tag."""
+    return INVALID_TAG_FORMAT

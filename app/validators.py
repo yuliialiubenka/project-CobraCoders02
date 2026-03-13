@@ -110,7 +110,13 @@ def is_valid_note_tag(tag: str) -> bool:
         return False
 
     trimmed = tag.strip()
-    return 0 < len(trimmed) <= 30 and "--" not in trimmed
+    if len(trimmed) == 0 or len(trimmed) > 30:
+        return False
+    
+    if "--" in trimmed:
+            return False
+        
+    return not any(char.isspace() for char in trimmed)
 
 
 def is_valid_name(name: str) -> bool:
@@ -227,3 +233,18 @@ def is_valid_birthday(birthday: str) -> bool:
         return False
 
     return True
+
+def is_valid_tag(tag: str) -> bool:
+    """
+    Validate tag format.
+
+    Accepts standard #some_text&simbol_without_spase.
+    """
+
+    if not isinstance(tag, str):
+        return False
+
+    trimmed = tag.strip()
+    pattern = r"#[^\s]+"
+
+    return bool(re.fullmatch(pattern, trimmed))

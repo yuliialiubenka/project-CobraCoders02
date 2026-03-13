@@ -57,6 +57,7 @@ INPUT_ERROR_INVALID_DELIMITERS_EDIT_NOTE = (
     "Use exactly one '--' delimiter: title -- new text.\n"
     "Usage: edit-note [title] -- [new text]"
 )
+INPUT_ERROR_INVALID_SORT_SHOW_NOTES = "Invalid sort option. Use: show-notes title"
 INPUT_ERROR_CONTACT_NOT_FOUND = "Contact not found."
 INPUT_ERROR_ENTER_NAME = "Enter user name."
 
@@ -67,7 +68,7 @@ UNKNOWN_COMMAND = (
     "search-contact, search-name, search-phone, search-email, search-address, "
     "search-birthday, "
     "add-birthday, show-birthday, birthdays, "
-    "delete-note, edit-note, search-notes, close, exit"
+    "delete-note, edit-note, search-notes, search-tag, close, exit"
 )
 
 HELP_COMMANDS: list[tuple[str, str]] = [
@@ -85,7 +86,7 @@ HELP_COMMANDS: list[tuple[str, str]] = [
     ("search-notes <query>", "Search notes by title, text, or tags"),
     ("show-email <name>", "Show email for a contact"),
     ("show-address <name>", "Show address for a contact"),
-    ("show-notes", "Show all notes in a table"),
+    ("show-notes title", "Show all notes; use 'title' to sort by title (A–Z)"),
     ("search-contact <query>", "Search across all fields"),
     ("search-name <query>", "Search by name"),
     ("search-phone <query>", "Search by phone"),
@@ -163,3 +164,6 @@ NO_EMAIL_FOUND = "Email not set."
 NO_ADDRESS_FOUND = "Address not set."
 NO_MATCHING_CONTACTS = "No matching contacts found."
 NO_UPCOMING_BIRTHDAYS = "No upcoming birthdays in the next {days} days."
+
+INVALID_TAG_FORMAT = "A tag is #some_text&simbol_without_spase that begins with #."
+NO_TAG_FOUND = "Tag not found"

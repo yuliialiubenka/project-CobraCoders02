@@ -33,6 +33,7 @@ from .show_birthday import show_birthday
 from .show_email import show_email
 from .show_notes import show_notes
 from .show_phone import show_phone
+from .search_tag import search_tag
 
 
 @colored_output()
@@ -82,6 +83,7 @@ def execute_command(
         "add-birthday": (add_birthday, "args_book"),
         "show-birthday": (show_birthday, "args_book"),
         "birthdays": (birthdays, "args_book"),
+        "search-tag": (search_tag, "args_notes"),
     }
 
     if command in commands:
@@ -90,6 +92,10 @@ def execute_command(
         # Check for unexpected arguments in no-args modes
         if mode in ("none", "book", "notes") and args:
             return error_unexpected_arguments(command)
+
+        # Optional-args modes (handler validates args)
+        if mode == "notes_optional":
+            return handler(notes_book, args)
 
         # Dynamic dispatch based on mode
         dispatch_map: dict[str, Callable[[], str]] = {

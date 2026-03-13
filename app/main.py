@@ -32,7 +32,7 @@ def main() -> None:
     - phone <name>: Look up a contact's phone numbers
     - show-email <name>: Show email for a contact
     - show-address <name>: Show address for a contact
-    - show-notes: Show all notes in a table (Title, Text, Tags if present, Date)
+    - show-notes title: Show all notes; add "title" to sort by title (A–Z, case-insensitive)
     - search-contact <query>: Search contacts by any stored field
     - delete-contact <name>: Remove a contact
     - show-contacts: Display all contacts in a formatted table
