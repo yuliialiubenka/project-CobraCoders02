@@ -348,3 +348,12 @@ def no_tag_found_message() -> str:
 def invalid_tag() -> str:
     """Return message when there are no tag."""
     return INVALID_TAG_FORMAT
+@output_formatter(color=Fore.BLUE)
+def no_tag_found_message() -> str:
+    """Return message when there are no tag."""
+    return NO_TAG_FOUND
+
+@output_formatter(color=Fore.BLUE)
+def invalid_tag() -> str:
+    """Return message when there are no tag."""
+    return INVALID_TAG_FORMAT
