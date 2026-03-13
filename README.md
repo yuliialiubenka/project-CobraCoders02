@@ -68,11 +68,13 @@ Interactive console application for contact management with input validation and
 - `change <name> <old_phone> <new_phone>` — change existing phone number
 - `add-email <name> <email>` — add or update contact email
 - `add-address <name> -- <address>` — add or update contact address (separator is required)
-- `add-note <text>` — add a standalone note (max 50 characters; stored in notes.pkl)
+- `add-note <text> [--tags tag1,tag2]` — add a standalone note with optional tags
 - `phone <name>` — show phone numbers for contact
 - `show-email <name>` — show email for contact
 - `show-address <name>` — show address for contact
-- `show-notes` — show all notes
+- `show-notes` — show all notes with UUID and tags
+- `search-notes <tag>` — find notes by tag
+- `sort-notes` — sort notes alphabetically by tags
 - `search <query>` — search contacts by name, phone, email, address, or birthday
 - `delete <name>` — delete contact from address book
 - `add-birthday <name> <birthday>` — add birthday to contact (DD.MM.YYYY format)
@@ -96,6 +98,9 @@ REM In interactive mode:
 >>> add John 0501234567
 >>> add-email John john@example.com
 >>> add-address John -- 12 Main Street, Kyiv
+>>> add-note "Buy milk" --tags shopping,home
+>>> search-notes shopping
+>>> sort-notes
 >>> phone John
 >>> change John 0501234567 0509876543
 >>> search example.com
@@ -287,8 +292,9 @@ birthdays 30                 # Show upcoming in the next 30 days
 
 - **Max length:** 50 characters (after trimming)
 - **Empty:** Note text must be non-empty after stripping; otherwise validation fails
-- **Storage:** Notes are stored in `notes.pkl` as a list of dicts with `id` (UUID4) and `text`; not tied to contacts
-- **Commands:** `add-note <text>`, `show-notes`
+- **Tags:** Optional, normalized to lowercase, unique per note, support letters, digits, `-`, `_`
+- **Storage:** Notes are stored in `notes.pkl` with `id` (UUID4), `text`, and `tags`; not tied to contacts
+- **Commands:** `add-note <text> [--tags tag1,tag2]`, `show-notes`, `search-notes <tag>`, `sort-notes`
 
 ## Requirements
 

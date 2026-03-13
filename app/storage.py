@@ -3,7 +3,7 @@
 import pickle
 from uuid import UUID, uuid4
 
-from app.models import AddressBook, NotesBook, Note
+from app.models import AddressBook, InvalidNoteError, NotesBook, Note
 
 
 def _migrate_loaded_book(book: AddressBook) -> AddressBook:
@@ -75,7 +75,40 @@ def load_data(filename: str = "addressbook.pkl") -> AddressBook:
 
 
 def _migrate_loaded_notes(notes_book: NotesBook) -> NotesBook:
-    """Backfill UUIDs for legacy notes if needed."""
+    """Backfill UUIDs and tags for legacy notes if needed."""
+
+    needs_rekey = False
+
+    for key, note in list(notes_book.data.items()):
+        if not hasattr(note, "id"):
+            note.id = uuid4()
+            needs_rekey = True
+        else:
+            try:
+                note.id = UUID(str(note.id))
+            except (ValueError, TypeError):
+                note.id = uuid4()
+                needs_rekey = True
+
+        if not hasattr(note, "tags"):
+            note.tags = []
+        elif isinstance(note.tags, str):
+            try:
+                note.tags = Note.normalize_tags([note.tags])
+            except InvalidNoteError:
+                note.tags = []
+        else:
+            try:
+                note.tags = Note.normalize_tags(list(note.tags))
+            except InvalidNoteError:
+                note.tags = []
+
+        if key != note.id:
+            needs_rekey = True
+
+    if needs_rekey:
+        notes_book.data = {note.id: note for note in notes_book.data.values()}
+
     return notes_book
 
 
@@ -117,7 +150,14 @@ def load_notes(filename: str = "notes.pkl") -> NotesBook:
         if isinstance(loaded, list):
             for item in loaded:
                 if isinstance(item, dict) and "text" in item:
-                    note = Note(item["text"])
+                    raw_tags = item.get("tags", [])
+                    if isinstance(raw_tags, str):
+                        raw_tags = [raw_tags]
+
+                    try:
+                        note = Note(item["text"], raw_tags)
+                    except InvalidNoteError:
+                        note = Note(item["text"])
                     # Preserve old UUID if it exists as string, else generate new
                     if "id" in item:
                         try:

@@ -101,6 +101,20 @@ def is_valid_note(note: str) -> bool:
     return 0 < len(trimmed) <= 50
 
 
+def is_valid_tag(tag: str) -> bool:
+    """Validate a single note tag."""
+
+    if not isinstance(tag, str):
+        return False
+
+    trimmed = tag.strip().lstrip("#")
+
+    if not trimmed:
+        return False
+
+    return all(char.isalnum() or char in "-_" for char in trimmed)
+
+
 def is_valid_name(name: str) -> bool:
     """
     Validate contact name format.

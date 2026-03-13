@@ -19,12 +19,14 @@ from .search_contacts import search_phone
 from .search_contacts import search_email
 from .search_contacts import search_address
 from .search_contacts import search_birthday
+from .search_notes import search_notes
 from .show_all import show_all
 from .show_address import show_address
 from .show_birthday import show_birthday
 from .show_email import show_email
 from .show_notes import show_notes
 from .show_phone import show_phone
+from .sort_notes import sort_notes
 
 
 @colored_output()
@@ -64,6 +66,8 @@ def execute_command(
         "show-email": (show_email, "args_book"),
         "show-address": (show_address, "args_book"),
         "show-notes": (show_notes, "notes"),
+        "search-notes": (search_notes, "args_notes"),
+        "sort-notes": (sort_notes, "notes"),
         "search": (search_contacts, "args_book"),
         "search-name": (search_name, "args_book"),
         "search-phone": (search_phone, "args_book"),

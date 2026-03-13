@@ -26,7 +26,10 @@ INPUT_ERROR_MISSING_ARGS_SEARCH = (
 )
 INPUT_ERROR_MISSING_ARGS_ADD_NOTE = (
     "To add a note, provide note text (max 50 characters).\n"
-    "Usage: add-note [note text]"
+    "Usage: add-note [note text] [--tags tag1,tag2]"
+)
+INPUT_ERROR_MISSING_ARGS_SEARCH_NOTES = (
+    "To search notes by tag, provide a tag.\n" + "Usage: search-notes [tag]"
 )
 INPUT_ERROR_CONTACT_NOT_FOUND = "Contact not found."
 INPUT_ERROR_ENTER_NAME = "Enter user name."
@@ -34,6 +37,7 @@ INPUT_ERROR_ENTER_NAME = "Enter user name."
 UNKNOWN_COMMAND = (
     "Unknown command. Try: hello, add, change, phone, all, delete, "
     "add-email, add-address, add-note, show-email, show-address, show-notes, search, "
+    "search-notes, sort-notes, "
     "search-name, search-phone, search-email, search-address, search-birthday, "
     "add-birthday, show-birthday, birthdays, close, exit"
 )
@@ -69,6 +73,9 @@ INVALID_DAYS_FORMAT = (
     "Invalid days format. Use a non-negative integer. Example: birthdays 7"
 )
 INVALID_NOTE_FORMAT = "Note must be 1 to 50 characters."
+INVALID_TAG_FORMAT = (
+    "Invalid tag format. Use letters, digits, '-' or '_' and separate tags with commas."
+)
 INVALID_ARGUMENT_FORMAT = "Invalid format for argument {arg_index}."
 
 PHONE_NOT_FOUND_IN_RECORD = "Phone number {phone} not found in record"
@@ -84,4 +91,5 @@ NOTE_ADDED = "Note saved."
 NO_EMAIL_FOUND = "Email not set."
 NO_ADDRESS_FOUND = "Address not set."
 NO_MATCHING_CONTACTS = "No matching contacts found."
+NO_MATCHING_NOTES = "No matching notes found."
 NO_UPCOMING_BIRTHDAYS = "No upcoming birthdays in the next {days} days."

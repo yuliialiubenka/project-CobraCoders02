@@ -18,6 +18,7 @@ from app.message_texts import (
     INVALID_BIRTHDAY_FORMAT,
     INVALID_DAYS_FORMAT,
     INVALID_NOTE_FORMAT,
+    INVALID_TAG_FORMAT,
     WELCOME_MESSAGE,
     HELLO_MESSAGE,
     GOODBYE_MESSAGE,
@@ -35,6 +36,7 @@ from app.message_texts import (
     NO_EMAIL_FOUND,
     NO_ADDRESS_FOUND,
     NO_MATCHING_CONTACTS,
+    NO_MATCHING_NOTES,
     NO_UPCOMING_BIRTHDAYS,
     INPUT_ERROR_MISSING_ARGS_CHANGE,
     INPUT_ERROR_MISSING_ARGS_ADD_EMAIL,
@@ -43,6 +45,7 @@ from app.message_texts import (
     INPUT_ERROR_MISSING_ARGS_DELETE,
     INPUT_ERROR_MISSING_ARGS_SEARCH,
     INPUT_ERROR_MISSING_ARGS_ADD_NOTE,
+    INPUT_ERROR_MISSING_ARGS_SEARCH_NOTES,
 )
 
 
@@ -137,9 +140,21 @@ def error_missing_args_add_note() -> str:
 
 
 @output_formatter(color=Fore.RED)
+def error_missing_args_search_notes() -> str:
+    """Return error message for missing arguments in search-notes command."""
+    return INPUT_ERROR_MISSING_ARGS_SEARCH_NOTES
+
+
+@output_formatter(color=Fore.RED)
 def error_invalid_note_format() -> str:
     """Return error message for invalid note format (empty or over 50 characters)."""
     return INVALID_NOTE_FORMAT
+
+
+@output_formatter(color=Fore.RED)
+def error_invalid_tag_format() -> str:
+    """Return error message for invalid tag format."""
+    return INVALID_TAG_FORMAT
 
 
 @output_formatter(color=Fore.YELLOW)
@@ -218,6 +233,12 @@ def no_address_found_message() -> str:
 def no_matching_contacts_message() -> str:
     """Return message when search returns no contacts."""
     return NO_MATCHING_CONTACTS
+
+
+@output_formatter(color=Fore.BLUE)
+def no_matching_notes_message() -> str:
+    """Return message when search returns no notes."""
+    return NO_MATCHING_NOTES
 
 
 @output_formatter(color=Fore.BLUE)
