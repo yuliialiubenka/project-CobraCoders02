@@ -52,6 +52,7 @@ from app.message_texts import (
     INPUT_ERROR_MISSING_ARGS_EDIT_NOTE,
     INPUT_ERROR_MISSING_DELIMITER_EDIT_NOTE,
     INPUT_ERROR_INVALID_DELIMITERS_EDIT_NOTE,
+    INPUT_ERROR_INVALID_SORT_SHOW_NOTES,
     NOTE_DELETED,
     NOTE_UPDATED,
     NOTE_NOT_FOUND,
@@ -173,6 +174,12 @@ def error_missing_delimiter_add_note() -> str:
 def error_invalid_delimiters_add_note() -> str:
     """Return error message for too many '--' delimiters in add-note command."""
     return INPUT_ERROR_INVALID_DELIMITERS_ADD_NOTE
+
+
+@output_formatter(color=Fore.RED)
+def error_invalid_sort_show_notes() -> str:
+    """Return error message for unsupported sort option in show-notes command."""
+    return INPUT_ERROR_INVALID_SORT_SHOW_NOTES
 
 
 @output_formatter(color=Fore.RED)

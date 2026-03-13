@@ -6,7 +6,7 @@ from typing import Literal
 from colorama import Fore
 
 from app.decorators import colored_output, input_error
-from app.messages import error_unexpected_arguments, no_notes_found_message
+from app.messages import error_invalid_sort_show_notes, no_notes_found_message
 from app.models import Note, NotesBook
 
 
@@ -74,7 +74,7 @@ def show_notes(notes_book: NotesBook, args: list[str] | None = None) -> str:
     sort_by: Literal["date", "title"] = "date"
     if args:
         if len(args) != 1 or args[0].lower() != "title":
-            return error_unexpected_arguments("show-notes")
+            return error_invalid_sort_show_notes()
         sort_by = "title"
 
     if not notes_book.data:
