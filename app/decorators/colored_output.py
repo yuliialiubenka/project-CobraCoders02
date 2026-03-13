@@ -3,11 +3,14 @@ from typing import Callable
 
 from colorama import Fore, Style
 
+from app.decorators.output_formatter import _apply_speaker_prefix
+
 
 def colored_output(
     success_color: str = Fore.GREEN,
     error_color: str = Fore.RED,
     info_color: str = Fore.BLUE,
+    speaker: str | None = "COBRA",
 ) -> Callable[[Callable[..., str]], Callable[..., str]]:
     """
     Decorator to apply colored formatting to function output.
@@ -54,10 +57,13 @@ def colored_output(
                     color = success_color
                 else:
                     color = info_color
+
+                formatted_result = _apply_speaker_prefix(result, speaker)
             else:
                 color = info_color
+                formatted_result = result
 
-            return f"{color}{result}{Style.RESET_ALL}"
+            return f"{color}{formatted_result}{Style.RESET_ALL}"
 
         return wrapper
 

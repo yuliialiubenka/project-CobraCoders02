@@ -4,6 +4,7 @@ from app.input_parser import parse_input
 from app.handlers import execute_command
 from app.messages import (
     welcome_message,
+    startup_greeting_message,
     goodbye_message,
     prompt_for_command,
 )
@@ -48,6 +49,7 @@ def main() -> None:
     notes_book = load_notes()
 
     print(welcome_message())
+    print(startup_greeting_message())
 
     try:
         while True:

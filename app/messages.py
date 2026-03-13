@@ -23,6 +23,7 @@ from app.message_texts import (
     INVALID_NOTE_TEXT_FORMAT,
     INVALID_NOTE_TITLE_FORMAT,
     WELCOME_MESSAGE,
+    STARTUP_GREETING_MESSAGE,
     HELLO_MESSAGE,
     GOODBYE_MESSAGE,
     ERROR_UNEXPECTED_ARGUMENTS,
@@ -64,10 +65,16 @@ from app.message_texts import (
 )
 
 
-@output_formatter(color=Fore.CYAN, bold=True)
+@output_formatter(color=Fore.CYAN, bold=True, speaker=None)
 def welcome_message() -> str:
     """Return welcome message for the assistant bot."""
     return WELCOME_MESSAGE
+
+
+@output_formatter(color=Fore.CYAN)
+def startup_greeting_message() -> str:
+    """Return startup greeting shown after the welcome banner."""
+    return STARTUP_GREETING_MESSAGE
 
 
 @output_formatter(color=Fore.GREEN)
@@ -76,7 +83,7 @@ def hello_message() -> str:
     return HELLO_MESSAGE
 
 
-@output_formatter(color=Fore.CYAN)
+@output_formatter(color=Fore.CYAN, speaker=None)
 def help_message() -> str:
     """Return help as a two-column aligned table matching the contacts style."""
     title = "=== Available Commands ==="
@@ -239,7 +246,7 @@ def error_invalid_note_tags_format() -> str:
     return INVALID_NOTE_TAGS_FORMAT
 
 
-@output_formatter(color=Fore.YELLOW)
+@output_formatter(color=Fore.YELLOW, speaker=None)
 def prompt_for_command() -> str:
     """Return prompt message for requesting a command."""
     return PROMPT_FOR_COMMAND

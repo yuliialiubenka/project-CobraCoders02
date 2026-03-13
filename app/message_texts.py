@@ -100,14 +100,18 @@ HELP_COMMANDS: list[tuple[str, str]] = [
     ("close / exit", "Exit the program"),
 ]
 
-WELCOME_MESSAGE = "Welcome to the assistant bot!"
-HELLO_MESSAGE = "How can I help you?"
+WELCOME_MESSAGE = (
+    "Welcome to the assistant bot COBRA!\n"
+	"===================================\n"
+)
+STARTUP_GREETING_MESSAGE = "Hello, I am your assistant bot."
+HELLO_MESSAGE = "How can I assist you today?"
 GOODBYE_MESSAGE = "Good bye!"
 
 ERROR_UNEXPECTED_ARGUMENTS = "Error: The command '{command}' does not accept arguments."
 
 # PROMPT_FOR_ARGUMENT = "Enter the {arg_description} for the command {command}: "
-PROMPT_FOR_COMMAND = "Enter a command: "
+PROMPT_FOR_COMMAND = "USER: "
 
 NO_CONTACTS_FOUND = "No contacts found."
 NO_NOTES_FOUND = "No notes found."
