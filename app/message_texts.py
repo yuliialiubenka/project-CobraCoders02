@@ -63,7 +63,7 @@ UNKNOWN_COMMAND = (
     "add-email, add-address, add-note, show-email, show-address, show-notes, search, "
     "search-name, search-phone, search-email, search-address, search-birthday, "
     "add-birthday, show-birthday, birthdays, "
-    "delete-note, edit-note, search-notes, close, exit"
+    "delete-note, edit-note, search-notes, search-tag, close, exit"
 )
 
 WELCOME_MESSAGE = "Welcome to the assistant bot!"
@@ -122,3 +122,6 @@ NO_EMAIL_FOUND = "Email not set."
 NO_ADDRESS_FOUND = "Address not set."
 NO_MATCHING_CONTACTS = "No matching contacts found."
 NO_UPCOMING_BIRTHDAYS = "No upcoming birthdays in the next {days} days."
+
+INVALID_TAG_FORMAT = "A tag is #some_text&simbol_without_spase that begins with #."
+NO_TAG_FOUND = "Tag not found"

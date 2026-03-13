@@ -2,6 +2,9 @@
 
 from datetime import datetime
 from uuid import UUID, uuid4
+import re
+
+from .tag import TagMatch
 
 from app.message_texts import (
     INVALID_NOTE_TAGS_FORMAT,
@@ -50,7 +53,7 @@ class NoteTitle(Field):
 class Note:
     """Class for storing a note with metadata and unique UUID identifier."""
 
-    def __init__(self, title: str, text: str, tags: list[str] | None = None) -> None:
+    def __init__(self, title: str, text: str, tags: list[TagMatch] | None = None) -> None:
         """Initialize note with title, text, and optional tags.
 
         Args:
@@ -64,7 +67,16 @@ class Note:
         self.id: UUID = uuid4()
         self.title: NoteTitle = NoteTitle(title)
         self.text: NoteText = NoteText(text)
-        self.tags: list[str] = self.normalize_tags(tags or [])
+        
+        converted_tags = [
+            TagMatch(tag if tag.startswith("#") else "#" + tag)
+            for tag in (tags or [])
+        ]
+        
+        text_tags = self.extract_tags_from_text(text)
+        full_tag_list = converted_tags + text_tags
+        self.tags: list[str] = self.normalize_tags(full_tag_list)
+        
         self.created_at: datetime = now
         self.updated_at: datetime = now
 
@@ -76,7 +88,7 @@ class Note:
         seen: set[str] = set()
 
         for tag in tags:
-            trimmed = tag.strip()
+            trimmed = tag.value.strip()
 
             if not is_valid_note_tag(trimmed):
                 raise InvalidNoteError(INVALID_NOTE_TAGS_FORMAT)
@@ -89,8 +101,14 @@ class Note:
             normalized_tags.append(trimmed)
 
         return normalized_tags
+    
+    @staticmethod
+    def extract_tags_from_text(text: str) -> list[TagMatch]:
+        """Extract tags from text like #tag."""
+        tags_symbol = re.findall(r"#([^\s]+)", text)
+        return [TagMatch("#" + tag) for tag in tags_symbol]
 
     def __str__(self) -> str:
         """Return concise string representation of the note."""
-
-        return f"{self.title.value}: {self.text.value}"
+        tags_str = " ".join(tag.value for tag in self.tags)
+        return f"{self.title.value}: {self.text.value} {tags_str}"
