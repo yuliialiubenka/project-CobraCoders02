@@ -56,6 +56,7 @@ from app.message_texts import (
     NOTE_UPDATED,
     NOTE_NOT_FOUND,
     NO_MATCHING_NOTES,
+    HELP_COMMANDS,
 )
 
 
@@ -69,6 +70,17 @@ def welcome_message() -> str:
 def hello_message() -> str:
     """Return greeting message."""
     return HELLO_MESSAGE
+
+
+@output_formatter(color=Fore.CYAN)
+def help_message() -> str:
+    """Return help as a two-column aligned table matching the contacts style."""
+    title = "=== Available Commands ==="
+    col1_width = max(len(cmd) for cmd, _ in HELP_COMMANDS)
+    header = f"{'Command':<{col1_width}} | Description"
+    rows = [f"{cmd:<{col1_width}} | {desc}" for cmd, desc in HELP_COMMANDS]
+    separator = " " * len(title)
+    return f"{title}\n{separator}\n{header}\n" + "\n".join(rows)
 
 
 @output_formatter(color=Fore.CYAN)
