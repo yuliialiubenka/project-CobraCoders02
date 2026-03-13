@@ -7,7 +7,7 @@ from app.message_texts import (
     INPUT_ERROR_MISSING_ARGS,
     UNKNOWN_COMMAND,
 )
-from app.models.exceptions import RecordError
+from app.models.exceptions import RecordError, InvalidNoteError
 
 
 def _format_input_exception(exc: Exception) -> str:
@@ -25,7 +25,7 @@ def _format_input_exception(exc: Exception) -> str:
             message = INPUT_ERROR_CONTACT_NOT_FOUND
     elif isinstance(exc, IndexError):
         message = INPUT_ERROR_ENTER_NAME
-    elif isinstance(exc, RecordError):
+    elif isinstance(exc, RecordError, InvalidNoteError):
         message = str(exc)
 
     return message
@@ -56,7 +56,7 @@ def input_error(func: Callable[..., str]) -> Callable[..., str]:
     def inner(*args: object, **kwargs: object) -> str:
         try:
             return func(*args, **kwargs)
-        except (ValueError, KeyError, IndexError, RecordError) as exc:
+        except (ValueError, KeyError, IndexError, RecordError, InvalidNoteError) as exc:
             return _format_input_exception(exc)
 
     return inner

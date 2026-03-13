@@ -81,7 +81,7 @@ def execute_command(
         "add-birthday": (add_birthday, "args_book"),
         "show-birthday": (show_birthday, "args_book"),
         "birthdays": (birthdays, "args_book"),
-        "search-tag": (search_tag, "tag"),
+        "search-tag": (search_tag, "args_notes"),
     }
 
     if command in commands:

@@ -110,7 +110,13 @@ def is_valid_note_tag(tag: str) -> bool:
         return False
 
     trimmed = tag.strip()
-    return 0 < len(trimmed) <= 30 and "--" not in trimmed
+    if len(trimmed) == 0 or len(trimmed) > 30:
+        return False
+    
+    if "--" in trimmed:
+            return False
+        
+    return not any(char.isspace() for char in trimmed)
 
 
 def is_valid_name(name: str) -> bool:

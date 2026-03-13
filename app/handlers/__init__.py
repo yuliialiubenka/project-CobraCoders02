@@ -22,7 +22,7 @@ from .search_contacts import search_phone
 from .search_contacts import search_email
 from .search_contacts import search_address
 from .search_contacts import search_birthday
-from .search_tag import serch_tag
+from .search_tag import search_tag
 
 __all__ = [
     "add_address",
@@ -47,5 +47,5 @@ __all__ = [
     "search_email",
     "search_address",
     "search_birthday",
-	"search_tag",
+    "search_tag",
 ]

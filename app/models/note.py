@@ -4,14 +4,13 @@ from datetime import datetime
 from uuid import UUID, uuid4
 import re
 
-from .tag import TagMatch
-
 from app.message_texts import (
     INVALID_NOTE_TAGS_FORMAT,
     INVALID_NOTE_TEXT_FORMAT,
     INVALID_NOTE_TITLE_FORMAT,
 )
 from app.validators import is_valid_note_tag, is_valid_note_text, is_valid_note_title
+from .tag import TagMatch
 
 from .exceptions import InvalidNoteError
 from .field import Field
@@ -81,14 +80,15 @@ class Note:
         self.updated_at: datetime = now
 
     @staticmethod
-    def normalize_tags(tags: list[str]) -> list[str]:
+    def normalize_tags(tags: list[TagMatch | str]) -> list[str]:
         """Normalize tags while preserving user-visible casing."""
 
         normalized_tags: list[str] = []
         seen: set[str] = set()
 
         for tag in tags:
-            trimmed = tag.value.strip()
+            raw_value = tag.value if isinstance(tag, TagMatch) else str(tag)
+            trimmed = raw_value.strip()
 
             if not is_valid_note_tag(trimmed):
                 raise InvalidNoteError(INVALID_NOTE_TAGS_FORMAT)
@@ -110,5 +110,5 @@ class Note:
 
     def __str__(self) -> str:
         """Return concise string representation of the note."""
-        tags_str = " ".join(tag.value for tag in self.tags)
+        tags_str = " ".join(self.tags)
         return f"{self.title.value}: {self.text.value} {tags_str}"
