@@ -81,7 +81,7 @@ HELP_COMMANDS: list[tuple[str, str]] = [
     ("search-notes <query>", "Search notes by title, text, or tags"),
     ("show-email <name>", "Show email for a contact"),
     ("show-address <name>", "Show address for a contact"),
-    ("show-notes", "Show all notes in a table"),
+    ("show-notes [title]", "Show all notes; use 'title' to sort by title (A–Z)"),
     ("search <query>", "Search across all fields"),
     ("search-name <query>", "Search by name"),
     ("search-phone <query>", "Search by phone"),

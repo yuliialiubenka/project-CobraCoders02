@@ -70,7 +70,7 @@ def execute_command(
         "search-notes": (search_notes, "args_notes"),
         "show-email": (show_email, "args_book"),
         "show-address": (show_address, "args_book"),
-        "show-notes": (show_notes, "notes"),
+        "show-notes": (show_notes, "notes_optional"),
         "search": (search_contacts, "args_book"),
         "search-name": (search_name, "args_book"),
         "search-phone": (search_phone, "args_book"),
@@ -88,6 +88,10 @@ def execute_command(
         # Check for unexpected arguments in no-args modes
         if mode in ("none", "book", "notes") and args:
             return error_unexpected_arguments(command)
+
+        # Optional-args modes (handler validates args)
+        if mode == "notes_optional":
+            return handler(notes_book, args)
 
         # Dynamic dispatch based on mode
         dispatch_map: dict[str, Callable[[], str]] = {
