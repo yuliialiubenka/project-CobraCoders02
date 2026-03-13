@@ -7,6 +7,8 @@ This module provides user-friendly message functions with formatting:
 - Command prompts
 """
 
+from difflib import get_close_matches
+
 from colorama import Fore
 
 from app.decorators import output_formatter
@@ -24,6 +26,7 @@ from app.message_texts import (
     HELLO_MESSAGE,
     GOODBYE_MESSAGE,
     ERROR_UNEXPECTED_ARGUMENTS,
+    UNKNOWN_COMMAND,
     PROMPT_FOR_COMMAND,
     NO_CONTACTS_FOUND,
     NO_NOTES_FOUND,
@@ -38,6 +41,7 @@ from app.message_texts import (
     NO_ADDRESS_FOUND,
     NO_MATCHING_CONTACTS,
     NO_UPCOMING_BIRTHDAYS,
+    INPUT_ERROR_MISSING_ARGS_PHONE,
     INPUT_ERROR_MISSING_ARGS_CHANGE,
     INPUT_ERROR_MISSING_ARGS_ADD_EMAIL,
     INPUT_ERROR_MISSING_ARGS_ADD_ADDRESS,
@@ -85,6 +89,42 @@ def help_message() -> str:
     return f"{title}\n{separator}\n{header}\n{divider}\n" + "\n".join(rows)
 
 
+def _help_command_aliases() -> list[str]:
+    """Build a normalized list of command aliases from HELP_COMMANDS."""
+
+    aliases: list[str] = []
+
+    for command_usage, _ in HELP_COMMANDS:
+        if " / " in command_usage:
+            aliases.extend(part.strip().lower() for part in command_usage.split("/"))
+        else:
+            aliases.append(command_usage.split()[0].strip().lower())
+
+    # Preserve order and remove duplicates.
+    return list(dict.fromkeys(aliases))
+
+
+def unknown_command_message(command: str) -> str:
+    """Return unknown-command message with the closest command suggestion."""
+
+    normalized_command = command.strip().lower()
+
+    if not normalized_command:
+        return UNKNOWN_COMMAND
+
+    suggestion = get_close_matches(
+        normalized_command,
+        _help_command_aliases(),
+        n=1,
+        cutoff=0.6,
+    )
+
+    if suggestion:
+        return f"Unknown command. Try to use: {suggestion[0]}"
+
+    return UNKNOWN_COMMAND
+
+
 @output_formatter(color=Fore.CYAN)
 def goodbye_message() -> str:
     """Return goodbye message."""
@@ -119,6 +159,12 @@ def error_invalid_email_format() -> str:
 def error_invalid_address_format() -> str:
     """Return error message for invalid address format."""
     return INVALID_ADDRESS_FORMAT
+
+
+@output_formatter(color=Fore.RED)
+def error_missing_args_phone() -> str:
+    """Return error message for missing arguments in phone command."""
+    return INPUT_ERROR_MISSING_ARGS_PHONE
 
 
 @output_formatter(color=Fore.RED)

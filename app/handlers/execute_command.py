@@ -2,7 +2,12 @@ from typing import Callable
 from functools import partial
 
 from app.decorators import colored_output, input_error
-from app.messages import error_unexpected_arguments, hello_message, help_message
+from app.messages import (
+    error_unexpected_arguments,
+    hello_message,
+    help_message,
+    unknown_command_message,
+)
 from app.models import AddressBook, NotesBook
 
 from .add_address import add_address
@@ -46,9 +51,6 @@ def execute_command(
 
     Returns:
         Result string from command execution.
-
-    Raises:
-        KeyError: If command is not recognized.
     """
 
     if not command:
@@ -101,4 +103,4 @@ def execute_command(
         if mode in dispatch_map:
             return dispatch_map[mode]()
 
-    raise KeyError("unknown_command")
+    return unknown_command_message(command)

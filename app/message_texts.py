@@ -3,6 +3,10 @@ Centralized user-facing text constants for the assistant bot.
 """
 
 INPUT_ERROR_MISSING_ARGS = "Give me name and phone please."
+INPUT_ERROR_MISSING_ARGS_PHONE = (
+    "To show phone numbers, provide: name.\n"
+	"Usage: phone [name]"
+)
 INPUT_ERROR_MISSING_ARGS_CHANGE = (
     "To change a phone number, provide: name, old phone, new phone.\n"
     "Usage: change [name] [old phone] [new phone]"
@@ -59,9 +63,10 @@ INPUT_ERROR_CONTACT_NOT_FOUND = "Contact not found."
 INPUT_ERROR_ENTER_NAME = "Enter user name."
 
 UNKNOWN_COMMAND = (
-    "Unknown command. Try: help to see all commands. Or one of this: hello, add, change, phone, all, delete, "
-    "add-email, add-address, add-note, show-email, show-address, show-notes, search, "
-    "search-name, search-phone, search-email, search-address, search-birthday, "
+    "Unknown command. Try: help to see all commands. "
+    "Or one of this: hello, add, change, phone, all, delete, "
+    "add-email, add-address, add-note, show-email, show-address, show-notes, "
+    "search, search-name, search-phone, search-email, search-address, search-birthday, "
     "add-birthday, show-birthday, birthdays, "
     "delete-note, edit-note, search-notes, close, exit"
 )
@@ -91,7 +96,7 @@ HELP_COMMANDS: list[tuple[str, str]] = [
     ("add-birthday <name> <DD.MM.YYYY>", "Add birthday to a contact"),
     ("show-birthday <name>", "Show birthday for a contact"),
     ("birthdays [days]", "Show upcoming birthdays (default: 7 days)"),
-	("help", "Show this help message"),
+    ("help", "Show this help message"),
     ("close / exit", "Exit the program"),
 ]
 
