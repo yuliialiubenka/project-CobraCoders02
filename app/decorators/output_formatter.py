@@ -4,9 +4,28 @@ from typing import Callable
 from colorama import Fore, Style
 
 
+def _is_structured_message(message: str) -> bool:
+    """Return True for tabular or banner-like blocks that should stay unprefixed."""
+
+    stripped_message = message.strip()
+    if not stripped_message:
+        return False
+
+    lines = stripped_message.splitlines()
+
+    if stripped_message.startswith("==="):
+        return True
+
+    if any(" | " in line for line in lines):
+        return True
+
+    return any(line and set(line) <= {"=", "-", "+"} for line in lines)
+
+
 def output_formatter(
     color: str = Fore.WHITE,
     bold: bool = False,
+    speaker: str | None = "COBRA",
 ) -> Callable[[Callable[..., str]], Callable[..., str]]:
     """
     Decorator to format function output with specific color and style.
@@ -34,6 +53,9 @@ def output_formatter(
         def wrapper(*args: object, **kwargs: object) -> str:
             result = func(*args, **kwargs)
             style = Style.BRIGHT if bold else ""
+            if speaker and not _is_structured_message(result):
+                prefix = f"{Fore.CYAN}{style}{speaker}:{Style.RESET_ALL} "
+                return prefix + f"{style}{color}{result}{Style.RESET_ALL}"
             return f"{style}{color}{result}{Style.RESET_ALL}"
 
         return wrapper

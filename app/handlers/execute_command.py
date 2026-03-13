@@ -2,7 +2,12 @@ from typing import Callable
 from functools import partial
 
 from app.decorators import colored_output, input_error
-from app.messages import error_unexpected_arguments, hello_message, help_message
+from app.messages import (
+    error_unexpected_arguments,
+    hello_message,
+    help_message,
+    unknown_command_message,
+)
 from app.models import AddressBook, NotesBook
 
 from .add_address import add_address
@@ -47,9 +52,6 @@ def execute_command(
 
     Returns:
         Result string from command execution.
-
-    Raises:
-        KeyError: If command is not recognized.
     """
 
     if not command:
@@ -58,11 +60,11 @@ def execute_command(
     commands: dict[str, tuple[Callable[..., str], str]] = {
         "hello": (hello_message, "none"),
         "help": (help_message, "none"),
-        "add": (add_contact, "args_book"),
-        "change": (change_contact, "args_book"),
+        "add-phone": (add_contact, "args_book"),
+        "change-phone": (change_contact, "args_book"),
         "phone": (show_phone, "args_book"),
-        "all": (show_all, "book"),
-        "delete": (delete_contact, "args_book"),
+        "show-contacts": (show_all, "book"),
+        "delete-contact": (delete_contact, "args_book"),
         "add-email": (add_email, "args_book"),
         "add-address": (add_address, "args_book"),
         "add-note": (add_note, "args_notes"),
@@ -71,8 +73,8 @@ def execute_command(
         "search-notes": (search_notes, "args_notes"),
         "show-email": (show_email, "args_book"),
         "show-address": (show_address, "args_book"),
-        "show-notes": (show_notes, "notes_optional"),
-        "search": (search_contacts, "args_book"),
+        "show-notes": (show_notes, "notes"),
+        "search-contact": (search_contacts, "args_book"),
         "search-name": (search_name, "args_book"),
         "search-phone": (search_phone, "args_book"),
         "search-email": (search_email, "args_book"),
@@ -107,4 +109,4 @@ def execute_command(
         if mode in dispatch_map:
             return dispatch_map[mode]()
 
-    raise KeyError("unknown_command")
+    return unknown_command_message(command)

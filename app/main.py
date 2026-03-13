@@ -4,6 +4,7 @@ from app.input_parser import parse_input
 from app.handlers import execute_command
 from app.messages import (
     welcome_message,
+    startup_greeting_message,
     goodbye_message,
     prompt_for_command,
 )
@@ -20,8 +21,8 @@ def main() -> None:
     Provides an interactive command-line interface for managing contacts.
     Supported commands:
     - hello: Display greeting
-    - add <name> <phone>: Add a new contact
-    - change <name> <old_phone> <new_phone>: Update phone number
+    - add-phone <name> <phone>: Add a new contact
+    - change-phone <name> <old_phone> <new_phone>: Update phone number
     - add-email <name> <email>: Add or update contact email
     - add-address <name> <address>: Add or update contact address
     - add-note <title> -- <text> -- <tag1, tag2>: Add a note with optional tags
@@ -31,10 +32,10 @@ def main() -> None:
     - phone <name>: Look up a contact's phone numbers
     - show-email <name>: Show email for a contact
     - show-address <name>: Show address for a contact
-    - show-notes [title]: Show all notes; add "title" to sort by title (A–Z, case-insensitive)
-    - search <query>: Search contacts by any stored field
-    - delete <name>: Remove a contact
-    - all: Display all contacts in a formatted table
+    - show-notes title: Show all notes; add "title" to sort by title (A–Z, case-insensitive)
+    - search-contact <query>: Search contacts by any stored field
+    - delete-contact <name>: Remove a contact
+    - show-contacts: Display all contacts in a formatted table
     - add-birthday <name> <date>: Add birthday (DD.MM.YYYY)
     - show-birthday <name>: Show birthday for a contact
     - birthdays [days]: Show upcoming birthdays (default: next 7 days)
@@ -48,6 +49,7 @@ def main() -> None:
     notes_book = load_notes()
 
     print(welcome_message())
+    print(startup_greeting_message())
 
     try:
         while True:

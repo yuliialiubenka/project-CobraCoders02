@@ -3,9 +3,12 @@ Centralized user-facing text constants for the assistant bot.
 """
 
 INPUT_ERROR_MISSING_ARGS = "Give me name and phone please."
+INPUT_ERROR_MISSING_ARGS_PHONE = (
+    "To show phone numbers, provide: name.\n" + "Usage: phone [name]"
+)
 INPUT_ERROR_MISSING_ARGS_CHANGE = (
     "To change a phone number, provide: name, old phone, new phone.\n"
-    "Usage: change [name] [old phone] [new phone]"
+    "Usage: change-phone [name] [old phone] [new phone]"
 )
 INPUT_ERROR_MISSING_ARGS_ADD_EMAIL = (
     "To add an email, provide: name and email.\n" + "Usage: add-email [name] [email]"
@@ -19,10 +22,10 @@ INPUT_ERROR_MISSING_DELIMITER_ADD_ADDRESS = (
     + "Usage: add-address [name] -- [address]"
 )
 INPUT_ERROR_MISSING_ARGS_DELETE = (
-    "To delete a contact, provide: name. " + "Usage: delete [name]"
+    "To delete a contact, provide: name. " + "Usage: delete-contact [name]"
 )
 INPUT_ERROR_MISSING_ARGS_SEARCH = (
-    "To search contacts, provide a query.\n" + "Usage: search [query]"
+    "To search contacts, provide a query.\n" + "Usage: search-contact [query]"
 )
 INPUT_ERROR_MISSING_ARGS_ADD_NOTE = (
     "To add a note, provide a title and text. Tags are optional.\n"
@@ -40,8 +43,7 @@ INPUT_ERROR_MISSING_ARGS_DELETE_NOTE = (
     "To delete a note, provide: title. Usage: delete-note [title]"
 )
 INPUT_ERROR_MISSING_ARGS_SEARCH_NOTES = (
-    "To search notes, provide a query.\n"
-	"Usage: search-notes [query]"
+    "To search notes, provide a query.\n" + "Usage: search-notes [query]"
 )
 INPUT_ERROR_MISSING_ARGS_EDIT_NOTE = (
     "To edit a note, provide: title and new text.\n"
@@ -60,20 +62,22 @@ INPUT_ERROR_CONTACT_NOT_FOUND = "Contact not found."
 INPUT_ERROR_ENTER_NAME = "Enter user name."
 
 UNKNOWN_COMMAND = (
-    "Unknown command. Try: help to see all commands. Or one of this: hello, add, change, phone,  "
-    "all, delete, add-email, add-address, add-note, show-email, show-address, show-notes, search, "
-    "search-name, search-phone, search-email, search-address, search-birthday, "
+    "Unknown command. Try: help to see all commands. "
+    "Or one of this: hello, add-phone, change-phone, phone, show-contacts, delete-contact, "
+    "add-email, add-address, add-note, show-email, show-address, show-notes, "
+    "search-contact, search-name, search-phone, search-email, search-address, "
+    "search-birthday, "
     "add-birthday, show-birthday, birthdays, "
     "delete-note, edit-note, search-notes, search-tag, close, exit"
 )
 
 HELP_COMMANDS: list[tuple[str, str]] = [
     ("hello", "Show greeting"),
-    ("add <name> <phone>", "Add contact or add phone to existing"),
-    ("change <name> <old_phone> <new_phone>", "Change a phone number"),
+    ("add-phone <name> <phone>", "Add contact or add phone to existing"),
+    ("change-phone <name> <old_phone> <new_phone>", "Change a phone number"),
     ("phone <name>", "Show phone numbers for a contact"),
-    ("all", "Show all contacts"),
-    ("delete <name>", "Delete a contact"),
+    ("show-contacts", "Show all contacts"),
+    ("delete-contact <name>", "Delete a contact"),
     ("add-email <name> <email>", "Add or update contact email"),
     ("add-address <name> -- <address>", "Add or update contact address"),
     ("add-note <title> -- <text> -- <tag1, tag2>", "Add a note with optional tags"),
@@ -82,8 +86,8 @@ HELP_COMMANDS: list[tuple[str, str]] = [
     ("search-notes <query>", "Search notes by title, text, or tags"),
     ("show-email <name>", "Show email for a contact"),
     ("show-address <name>", "Show address for a contact"),
-    ("show-notes [title]", "Show all notes; use 'title' to sort by title (A–Z)"),
-    ("search <query>", "Search across all fields"),
+    ("show-notes title", "Show all notes; use 'title' to sort by title (A–Z)"),
+    ("search-contact <query>", "Search across all fields"),
     ("search-name <query>", "Search by name"),
     ("search-phone <query>", "Search by phone"),
     ("search-email <query>", "Search by email"),
@@ -96,14 +100,17 @@ HELP_COMMANDS: list[tuple[str, str]] = [
     ("close / exit", "Exit the program"),
 ]
 
-WELCOME_MESSAGE = "Welcome to the assistant bot!"
-HELLO_MESSAGE = "How can I help you?"
+WELCOME_MESSAGE = (
+    "Welcome to the assistant bot COBRA!\n" + "===================================\n"
+)
+STARTUP_GREETING_MESSAGE = "Hello, I am your assistant bot."
+HELLO_MESSAGE = "How can I assist you today?"
 GOODBYE_MESSAGE = "Good bye!"
 
 ERROR_UNEXPECTED_ARGUMENTS = "Error: The command '{command}' does not accept arguments."
 
 # PROMPT_FOR_ARGUMENT = "Enter the {arg_description} for the command {command}: "
-PROMPT_FOR_COMMAND = "Enter a command: "
+PROMPT_FOR_COMMAND = "USER: "
 
 NO_CONTACTS_FOUND = "No contacts found."
 NO_NOTES_FOUND = "No notes found."
@@ -144,6 +151,11 @@ EMAIL_UPDATED = "Email updated."
 ADDRESS_ADDED = "Address added."
 ADDRESS_UPDATED = "Address updated."
 NOTE_ADDED = "Note saved."
+NOTE_DUPLICATE_TITLE = (
+    "A note with this title already exists.\n"
+    "Use 'edit-note {title} -- [new text]' to update it, "
+    "or choose a different title."
+)
 NOTE_UPDATED = "Note updated."
 NOTE_DELETED = "Note deleted."
 NOTE_NOT_FOUND = "Note not found."

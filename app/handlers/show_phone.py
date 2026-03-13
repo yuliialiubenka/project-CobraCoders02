@@ -1,5 +1,5 @@
 from app.decorators import colored_output, input_error, validate_args
-from app.messages import error_invalid_name_format
+from app.messages import error_invalid_name_format, error_missing_args_phone
 from app.models import AddressBook
 from app.validators import is_valid_name
 
@@ -11,6 +11,7 @@ from app.validators import is_valid_name
     validators={0: is_valid_name},
     error_messages={0: error_invalid_name_format()},
     normalize_args=True,
+    missing_args_message=error_missing_args_phone(),
 )
 def show_phone(args: list[str], book: AddressBook) -> str:
     """

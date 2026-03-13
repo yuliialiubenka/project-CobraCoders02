@@ -15,8 +15,8 @@ def parse_input(user_input: str) -> tuple[str, list[str]]:
         Tuple of (command, arguments_list). Returns ("", []) if input is empty or None.
 
     Example:
-        >>> parse_input("add John 0987654321")
-        ("add", ["John", "0987654321"])
+        >>> parse_input("add-phone John 0987654321")
+        ("add-phone", ["John", "0987654321"])
         >>> parse_input("")
         ("", [])
     """

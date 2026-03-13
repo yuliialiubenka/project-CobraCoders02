@@ -2,6 +2,7 @@
 
 from app.decorators import colored_output, input_error
 from app.messages import (
+    error_duplicate_note_title,
     error_invalid_delimiters_add_note,
     error_invalid_note_tags_format,
     error_invalid_note_text_format,
@@ -88,6 +89,9 @@ def add_note(args: list[str], notes_book: NotesBook) -> str:
 
     if not is_valid_note_text(text):
         return error_invalid_note_text_format()
+
+    if notes_book.find(title) is not None:
+        return error_duplicate_note_title(title)
 
     notes_book.add_note(title, text, tags)
     return note_added_message()

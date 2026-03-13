@@ -7,6 +7,8 @@ This module provides user-friendly message functions with formatting:
 - Command prompts
 """
 
+from difflib import get_close_matches
+
 from colorama import Fore
 
 from app.decorators import output_formatter
@@ -21,9 +23,11 @@ from app.message_texts import (
     INVALID_NOTE_TEXT_FORMAT,
     INVALID_NOTE_TITLE_FORMAT,
     WELCOME_MESSAGE,
+    STARTUP_GREETING_MESSAGE,
     HELLO_MESSAGE,
     GOODBYE_MESSAGE,
     ERROR_UNEXPECTED_ARGUMENTS,
+    UNKNOWN_COMMAND,
     PROMPT_FOR_COMMAND,
     NO_CONTACTS_FOUND,
     NO_NOTES_FOUND,
@@ -38,6 +42,7 @@ from app.message_texts import (
     NO_ADDRESS_FOUND,
     NO_MATCHING_CONTACTS,
     NO_UPCOMING_BIRTHDAYS,
+    INPUT_ERROR_MISSING_ARGS_PHONE,
     INPUT_ERROR_MISSING_ARGS_CHANGE,
     INPUT_ERROR_MISSING_ARGS_ADD_EMAIL,
     INPUT_ERROR_MISSING_ARGS_ADD_ADDRESS,
@@ -54,6 +59,7 @@ from app.message_texts import (
     INPUT_ERROR_INVALID_DELIMITERS_EDIT_NOTE,
     INPUT_ERROR_INVALID_SORT_SHOW_NOTES,
     NOTE_DELETED,
+    NOTE_DUPLICATE_TITLE,
     NOTE_UPDATED,
     NOTE_NOT_FOUND,
     NO_MATCHING_NOTES,
@@ -63,19 +69,25 @@ from app.message_texts import (
 )
 
 
-@output_formatter(color=Fore.CYAN, bold=True)
+@output_formatter(color=Fore.CYAN, bold=True, speaker=None)
 def welcome_message() -> str:
     """Return welcome message for the assistant bot."""
     return WELCOME_MESSAGE
 
 
-@output_formatter(color=Fore.GREEN)
+@output_formatter(color=Fore.CYAN)
+def startup_greeting_message() -> str:
+    """Return startup greeting shown after the welcome banner."""
+    return STARTUP_GREETING_MESSAGE
+
+
+@output_formatter(color=Fore.CYAN)
 def hello_message() -> str:
     """Return greeting message."""
     return HELLO_MESSAGE
 
 
-@output_formatter(color=Fore.CYAN)
+@output_formatter(color=Fore.CYAN, speaker=None)
 def help_message() -> str:
     """Return help as a two-column aligned table matching the contacts style."""
     title = "=== Available Commands ==="
@@ -86,6 +98,42 @@ def help_message() -> str:
     rows = [f"{cmd:<{col1_width}} | {desc}" for cmd, desc in HELP_COMMANDS]
     separator = " " * len(title)
     return f"{title}\n{separator}\n{header}\n{divider}\n" + "\n".join(rows)
+
+
+def _help_command_aliases() -> list[str]:
+    """Build a normalized list of command aliases from HELP_COMMANDS."""
+
+    aliases: list[str] = []
+
+    for command_usage, _ in HELP_COMMANDS:
+        if " / " in command_usage:
+            aliases.extend(part.strip().lower() for part in command_usage.split("/"))
+        else:
+            aliases.append(command_usage.split()[0].strip().lower())
+
+    # Preserve order and remove duplicates.
+    return list(dict.fromkeys(aliases))
+
+
+def unknown_command_message(command: str) -> str:
+    """Return unknown-command message with the closest command suggestion."""
+
+    normalized_command = command.strip().lower()
+
+    if not normalized_command:
+        return UNKNOWN_COMMAND
+
+    suggestion = get_close_matches(
+        normalized_command,
+        _help_command_aliases(),
+        n=1,
+        cutoff=0.6,
+    )
+
+    if suggestion:
+        return f"Unknown command. Try to use: {suggestion[0]}"
+
+    return UNKNOWN_COMMAND
 
 
 @output_formatter(color=Fore.CYAN)
@@ -122,6 +170,12 @@ def error_invalid_email_format() -> str:
 def error_invalid_address_format() -> str:
     """Return error message for invalid address format."""
     return INVALID_ADDRESS_FORMAT
+
+
+@output_formatter(color=Fore.RED)
+def error_missing_args_phone() -> str:
+    """Return error message for missing arguments in phone command."""
+    return INPUT_ERROR_MISSING_ARGS_PHONE
 
 
 @output_formatter(color=Fore.RED)
@@ -202,7 +256,7 @@ def error_invalid_note_tags_format() -> str:
     return INVALID_NOTE_TAGS_FORMAT
 
 
-@output_formatter(color=Fore.YELLOW)
+@output_formatter(color=Fore.YELLOW, speaker=None)
 def prompt_for_command() -> str:
     """Return prompt message for requesting a command."""
     return PROMPT_FOR_COMMAND
@@ -260,6 +314,12 @@ def contact_deleted_message() -> str:
 def note_added_message() -> str:
     """Return success message when a note is saved."""
     return NOTE_ADDED
+
+
+@output_formatter(color=Fore.RED)
+def error_duplicate_note_title(title: str) -> str:
+    """Return error message when a note with given title already exists."""
+    return NOTE_DUPLICATE_TITLE.format(title=title)
 
 
 @output_formatter(color=Fore.GREEN)
