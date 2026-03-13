@@ -38,6 +38,7 @@ def main() -> None:
     - add-birthday <name> <date>: Add birthday (DD.MM.YYYY)
     - show-birthday <name>: Show birthday for a contact
     - birthdays [days]: Show upcoming birthdays (default: next 7 days)
+    - help: Show all available commands and usage
     - close/exit: Terminate the program
 
     The bot runs in an infinite loop until the user enters "close" or "exit".

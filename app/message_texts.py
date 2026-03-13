@@ -59,12 +59,41 @@ INPUT_ERROR_CONTACT_NOT_FOUND = "Contact not found."
 INPUT_ERROR_ENTER_NAME = "Enter user name."
 
 UNKNOWN_COMMAND = (
-    "Unknown command. Try: hello, add, change, phone, all, delete, "
+    "Unknown command. Try: help to see all commands. Or one of this: hello, add, change, phone, all, delete, "
     "add-email, add-address, add-note, show-email, show-address, show-notes, search, "
     "search-name, search-phone, search-email, search-address, search-birthday, "
     "add-birthday, show-birthday, birthdays, "
     "delete-note, edit-note, search-notes, close, exit"
 )
+
+HELP_COMMANDS: list[tuple[str, str]] = [
+    ("hello", "Show greeting"),
+    ("add <name> <phone>", "Add contact or add phone to existing"),
+    ("change <name> <old_phone> <new_phone>", "Change a phone number"),
+    ("phone <name>", "Show phone numbers for a contact"),
+    ("all", "Show all contacts"),
+    ("delete <name>", "Delete a contact"),
+    ("add-email <name> <email>", "Add or update contact email"),
+    ("add-address <name> -- <address>", "Add or update contact address"),
+    ("add-note <title> -- <text> -- <tag1, tag2>", "Add a note with optional tags"),
+    ("delete-note <title>", "Delete a note by title"),
+    ("edit-note <title> -- <new text>", "Edit note text and update timestamp"),
+    ("search-notes <query>", "Search notes by title, text, or tags"),
+    ("show-email <name>", "Show email for a contact"),
+    ("show-address <name>", "Show address for a contact"),
+    ("show-notes", "Show all notes in a table"),
+    ("search <query>", "Search across all fields"),
+    ("search-name <query>", "Search by name"),
+    ("search-phone <query>", "Search by phone"),
+    ("search-email <query>", "Search by email"),
+    ("search-address <query>", "Search by address"),
+    ("search-birthday <query>", "Search by birthday"),
+    ("add-birthday <name> <DD.MM.YYYY>", "Add birthday to a contact"),
+    ("show-birthday <name>", "Show birthday for a contact"),
+    ("birthdays [days]", "Show upcoming birthdays (default: 7 days)"),
+	("help", "Show this help message"),
+    ("close / exit", "Exit the program"),
+]
 
 WELCOME_MESSAGE = "Welcome to the assistant bot!"
 HELLO_MESSAGE = "How can I help you?"

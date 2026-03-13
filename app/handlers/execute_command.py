@@ -2,7 +2,7 @@ from typing import Callable
 from functools import partial
 
 from app.decorators import colored_output, input_error
-from app.messages import error_unexpected_arguments, hello_message
+from app.messages import error_unexpected_arguments, hello_message, help_message
 from app.models import AddressBook, NotesBook
 
 from .add_address import add_address
@@ -56,6 +56,7 @@ def execute_command(
 
     commands: dict[str, tuple[Callable[..., str], str]] = {
         "hello": (hello_message, "none"),
+        "help": (help_message, "none"),
         "add": (add_contact, "args_book"),
         "change": (change_contact, "args_book"),
         "phone": (show_phone, "args_book"),
