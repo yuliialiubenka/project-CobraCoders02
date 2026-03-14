@@ -2,7 +2,7 @@
 	<img src="assets/cobra.png" alt="COBRA logo" width="320">
 </p>
 
-# COBRA 𓆘 — Contact Organizer & Basic Reminder Assistant
+# COBRA — Contact Organizer & Basic Reminder Assistant
 
 COBRA is a command-line assistant for managing contacts and notes in one place.
 It combines clear CLI commands, OOP-based domain models, and persistent storage via pickle
