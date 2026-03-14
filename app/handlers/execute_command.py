@@ -73,7 +73,7 @@ def execute_command(
         "search-notes": (search_notes, "args_notes"),
         "show-email": (show_email, "args_book"),
         "show-address": (show_address, "args_book"),
-        "show-notes": (show_notes, "notes"),
+        "show-notes": (show_notes, "notes_optional"),
         "search-contact": (search_contacts, "args_book"),
         "search-name": (search_name, "args_book"),
         "search-phone": (search_phone, "args_book"),

@@ -1,8 +1,14 @@
-# COBRA — Contact Organizer & Basic Reminder Assistant
+<p align="center">
+	<img src="assets/cobra.png" alt="COBRA logo" width="320">
+</p>
 
-This project contains a CLI contact assistant bot with OOP address book models and persistent storage via pickle (load on start, save on exit).
+# COBRA 𓆘 — Contact Organizer & Basic Reminder Assistant
 
-## Quick Start
+COBRA is a command-line assistant for managing contacts and notes in one place.
+It combines clear CLI commands, OOP-based domain models, and persistent storage via pickle
+(auto-load on start, auto-save on exit).
+
+## 🚀 Quick Start
 
 ### 1. Create Virtual Environment
 
@@ -110,256 +116,158 @@ PowerShell alternative:
 .\run-cobra.cmd
 ```
 
-### 6. Run Tests
+## 📌 Overview
 
-```cmd
-python test_add_users.py
-```
+COBRA is a CLI assistant for contact and notes management.
 
-## Overview
+Implemented features:
 
-### CLI Contact Assistant Bot
+- Contact CRUD with validation (name, phone, email, address, birthday)
+- Notes with title/text/tags support and duplicate-title protection
+- Notes search by text and by tag (`search-tag`)
+- Optional notes sorting by title (`show-notes title`)
+- Friendly error handling and command suggestions for typos
+- Persistent storage in `addressbook.pkl` and `notes.pkl`
 
-Interactive console application for contact management with input validation and error handling.
+## 🧰 Technologies & Key Features
 
-**Technologies:**
+**Technologies used (external/runtime):**
 
-- Modular architecture (separate modules for handlers, validators, messages)
-- Decorators for error handling and output formatting
-- `colorama` for colored terminal messages
-- Validation for names, phones, emails, and addresses
-- Dictionary-based contact storage
-- `pickle`-based persistence (`task/storage.py`)
+- Python 3.12+
+- colorama (colored CLI output)
 
-**Available Commands:**
+**Python standard library modules used:**
 
-- `hello` — greeting
-- `add-phone <name> <phone>` — add contact with phone number (or add phone to existing contact)
-- `change-phone <name> <old_phone> <new_phone>` — change existing phone number
-- `add-email <name> <email>` — add or update contact email
-- `add-address <name> -- <address>` — add or update contact address (separator is required)
-- `add-note <text>` — add a standalone note (max 50 characters; stored in notes.pkl)
-- `phone <name>` — show phone numbers for contact
-- `show-email <name>` — show email for contact
-- `show-address <name>` — show address for contact
-- `show-notes` — show all notes
-- `search-contact <query>` — search contacts by name, phone, email, address, or birthday
-- `delete-contact <name>` — delete contact from address book
-- `add-birthday <name> <birthday>` — add birthday to contact (DD.MM.YYYY format)
-- `show-birthday <name>` — show birthday for contact
-- `birthdays [days]` — show contacts with upcoming birthdays (default: next 7 days)
-- `show-contacts` — show all contacts with details
-- `close` / `exit` — exit program
+- difflib
+- shlex
+- re
+- pickle
+- datetime
+- collections
+- functools
+- typing
+- uuid
 
-**Phone Format:**
+**Architecture and implementation highlights:**
 
-- Accepts: `0501234567`, `050-123-4567`, `(050)123-4567`
-- Must be 10 digits starting with 0
-- No spaces or international prefix allowed
+- Modular structure: handlers, models, decorators, validators, storage, messages
+- OOP domain models for contacts and notes (`AddressBook`, `Record`, `NotesBook`, `Note`)
+- Decorator pipeline for handlers (`validate_args`, `input_error`, `colored_output`)
+- Unified message layer via centralized constants and formatting helpers
+- Graceful error handling with user-friendly responses instead of crashes
+- Command typo suggestions (closest match for unknown commands)
+- Normalization and validation for phone, email, address, birthday, note fields, and tags
+- Notes capabilities: duplicate title prevention, full-text search, tag search, sorting by title
+- Data persistence with load-on-start and save-on-exit behavior
 
-**Usage Examples:**
+## 🧭 Available Commands
+
+### 🛠 General
+
+- `hello`
+- `help`
+- `close` / `exit`
+
+### 👥 Contacts
+
+- `add-phone <name> <phone>`
+- `change-phone <name> <old_phone> <new_phone>`
+- `phone <name>`
+- `show-contacts`
+- `delete-contact <name>`
+- `add-email <name> <email>`
+- `show-email <name>`
+- `add-address <name> -- <address>`
+- `show-address <name>`
+- `search-contact <query>`
+- `search-name <query>`
+- `search-phone <query>`
+- `search-email <query>`
+- `search-address <query>`
+- `add-birthday <name> <DD.MM.YYYY>`
+- `show-birthday <name>`
+- `search-birthday <query>`
+- `birthdays [days]`
+
+### 📝 Notes
+
+- `add-note <title> -- <text> -- <tag1, tag2>`
+- `show-notes`
+- `show-notes title`
+- `search-notes <query>`
+- `search-tag <#tag>`
+- `edit-note <title> -- <new text>`
+- `delete-note <title>`
+
+## 💡 Examples
 
 ```cmd
 cobra
 
-REM In interactive mode:
->>> add-phone John 0501234567
->>> add-email John john@example.com
->>> add-address John -- 12 Main Street, Kyiv
->>> phone John
->>> change-phone John 0501234567 0509876543
->>> search-contact example.com
->>> birthdays 30
->>> show-contacts
->>> close
+REM Contacts
+add-phone John Doe 0501234567
+add-email John Doe john@example.com
+add-address John Doe -- 12 Main Street, London
+show-contacts
+search-contact john
+
+REM Notes
+add-note Weekly plan -- Finish report and call client -- work, urgent
+add-note Ideas -- Discuss #roadmap with team
+show-notes
+show-notes title
+search-notes report
+search-tag #work
 ```
 
-### Address Book Models
+## 🖼 Screenshots
 
-OOP-based address book implementation in `task/models/` package with proper encapsulation and validation.
+### Commands table
 
-**Architecture:**
+![Commands table](assets/commands-table.png)
 
-- **Field** — base class for all fields
-- **Name** — name field with validation (min 2 chars, letters only)
-- **Phone** — phone field with validation and normalization
-- **Email** — email field with validation and normalization
-- **Address** — address field with basic validation
-- **Record** — contact record managing name and multiple phones
-- **AddressBook** — main container inheriting from `UserDict`
-- **Custom Exceptions** — hierarchy for error handling
+### Contacts list
 
-**Key Features:**
+![Contacts list](assets/contacts-list.png)
 
-- ✅ Type hints throughout all code
-- ✅ Custom exception hierarchy (`AddressBookError`, `FieldError`, `RecordError`)
-- ✅ Phone normalization (flexible input → 10 digits storage)
-- ✅ Name validation (letters, spaces, hyphens, apostrophes)
-- ✅ Email validation and normalization to lowercase
-- ✅ Address storage with basic validation
-- ✅ Search across name, phone, email, address, and birthday
-- ✅ Centralized error messages in constants
-- ✅ Full inheritance chain (Field → Name/Phone)
-- ✅ Persistent storage with `pickle` (`addressbook.pkl`)
-- ✅ Safe startup fallback: if save file is missing/corrupted, app loads an empty address book
+### Notes list
 
-**Test File:**
+![Notes list](assets/notes-list.png)
 
-Run [test_add_users.py](test_add_users.py) to validate core command flow:
+### Bot interaction
 
-```cmd
-python test_add_users.py
-```
+![Bot interaction](assets/bot-interaction.png)
 
-## Project Structure
+## ✅ Validation Notes
+
+- Phone accepts local formats like `0501234567`, `050-123-4567`, `(050)123-4567`, then normalizes and stores them in one format: `0501234567`.
+- `add-address` and note-editing commands use `--` as a required separator.
+- `search-tag` expects a hashtag format (for example `#work`).
+- `show-notes` accepts only one optional sort argument: `title`.
+
+## 💾 Persistence
+
+- Contacts are loaded/saved via `addressbook.pkl`.
+- Notes are loaded/saved via `notes.pkl`.
+- Data is loaded on app start and saved on app exit.
+
+## 🗂 Project Structure
 
 ```
-goit-pycore-hw-08/
-├── task/
-│   ├── handlers/               # Command handlers package
-│   │   ├── __init__.py         # Package exports
-│   │   ├── add_contact.py      # add command handler
-│   │   ├── add_email.py        # add-email command handler
-│   │   ├── add_address.py      # add-address command handler
-│   │   ├── change_contact.py   # change command handler
-│   │   ├── search_contacts.py  # search command handler
-│   │   ├── show_phone.py       # phone command handler
-│   │   ├── show_email.py       # show-email command handler
-│   │   ├── show_address.py     # show-address command handler
-│   │   ├── delete_contact.py   # delete command handler
-│   │   ├── show_all.py         # all command handler
-│   │   ├── add_birthday.py     # add-birthday command handler
-│   │   ├── show_birthday.py    # show-birthday command handler
-│   │   ├── birthdays.py        # birthdays command handler
-│   │   └── execute_command.py  # Command dispatcher
-│   ├── decorators/             # Decorators package
-│   │   ├── __init__.py         # Package exports
-│   │   ├── validate_args.py    # Argument validation decorator
-│   │   ├── input_error.py      # Exception handling decorator
-│   │   ├── colored_output.py   # Semantic color formatting decorator
-│   │   └── output_formatter.py # Fixed style formatting decorator
-│   ├── models/                 # Address book models package
-│   │   ├── __init__.py         # Package exports
-│   │   ├── address.py          # Address field with validation
-│   │   ├── address_book.py     # AddressBook class
-│   │   ├── email.py            # Email field with validation
-│   │   ├── exceptions.py       # Custom exceptions hierarchy
-│   │   ├── field.py            # Base Field class
-│   │   ├── name.py             # Name field with validation
-│   │   ├── phone.py            # Phone field with validation
-│   │   ├── record.py           # Record class
-│   │   └── birthday.py         # Birthday field with validation
-│   ├── input_parser.py         # Command parsing logic
-│   ├── main.py                 # CLI bot entry point
-│   ├── message_texts.py        # Centralized message constants
-│   ├── messages.py             # Message formatting utilities
-│   ├── storage.py              # Pickle save/load helpers
-│   └── validators.py           # Input validation functions
-├── test_add_users.py           # Comprehensive integration test
-├── requirements.txt            # Dependencies
-└── README.md                   # Documentation
+project-CobraCoders02/
+├── app/
+│   ├── handlers/              # Command handlers
+│   ├── decorators/            # Decorators for validation/errors/output
+│   ├── models/                # AddressBook/Notes domain models
+│   ├── input_parser.py        # Command parsing
+│   ├── main.py                # CLI entry point
+│   ├── message_texts.py       # Centralized text constants
+│   ├── messages.py            # Formatted message builders
+│   ├── storage.py             # Pickle persistence
+│   └── validators.py          # Input validators
+├── pyproject.toml
+├── requirements.txt
+├── run-cobra.cmd
+├── run-cobra.ps1
+└── README.md
 ```
-
-## Architecture & Design Patterns
-
-### Modular Organization
-
-- **handlers/** — Command implementation (each command in separate file)
-- **decorators/** — Reusable decorators for validation, error handling, and formatting
-- **models/** — Data structures with validation and business logic
-- **validators.py** — Pure validation functions (reusable across CLI and models)
-- **messages.py** — Formatted user-facing messages with colors
-- **storage.py** — AddressBook persistence (load/save with pickle)
-- **main.py** — CLI event loop
-
-### Decorator Stack Pattern
-
-Handlers use layered decorators for clean separation:
-
-```python
-@colored_output()           # Automatic color formatting (outer)
-@input_error                # Exception → friendly message
-@validate_args(...)         # Argument validation (inner)
-def handler(args, book):
-    pass
-```
-
-### Error Handling
-
-- **Custom exceptions** in models layer for strict validation
-- **Decorator-based** exception handling in CLI layer
-- **Two-phase validation:** CLI validators → model validators
-
-## Birthday Feature
-
-Contacts can store birthdays in DD.MM.YYYY format:
-
-```cmd
-add-birthday John 25.12.1990
-show-birthday John
-birthdays 30                 # Show upcoming in the next 30 days
-```
-
-**Features:**
-
-- Birthday validation with leap year support
-- Upcoming birthday calculation window
-- Birthday display integrated with contact list (`all` command)
-- Independent birthday management (can be added/removed anytime)
-
-## Technologies and Concepts
-
-- **Python 3.12+** — modern version with type hints support
-- **OOP** — inheritance (Field → Name/Phone), encapsulation, custom exceptions
-- **Type Hints** — comprehensive type annotations (`str | None`, `list[Phone]`, etc.)
-- **Custom Exceptions** — exception hierarchy for clear error handling
-- **Decorators** — for error handling and output formatting
-- **colorama** — colored terminal output
-- **pickle** — serialization/deserialization for persistent storage
-- **re (regular expressions)** — for validation and text parsing
-- **shlex** — quote-aware CLI argument parsing
-- **UserDict** — proper dictionary inheritance for AddressBook
-- **Package Structure** — modular organization with `__init__.py` exports
-- **Validation** — two-layer (CLI input + model level)
-- **Data Normalization** — flexible phone input formats normalized to storage format
-
-## Validation Rules
-
-### Phone Numbers
-
-- **Format:** Local 10-digit numbers only
-- **Must start with:** 0
-- **Accepted input:** `0501234567`, `050-123-4567`, `(050)123-4567`
-- **Not allowed:** spaces, international prefix (`+380`)
-- **Storage:** Normalized to 10 digits (`0501234567`)
-
-### Names
-
-- **Min length:** 2 characters
-- **Allowed:** letters, spaces, hyphens, apostrophes
-- **Not allowed:** numbers, special symbols
-- **Examples:** `John`, `Mary-Jane`, `O'Brien`
-
-### Emails
-
-- **Format:** Standard email address (`local-part@domain`)
-- **Examples:** `john@example.com`, `mary.jane@company.org`
-- **Storage:** Normalized to lowercase
-
-### Addresses
-
-- **Min length:** 5 characters
-- **Allowed:** letters, digits, spaces, commas, dots, slashes, hyphens, apostrophes, `#`
-- **Required separator:** use `--` between name and address
-- **Example:** `add-address John Smith -- 12 Main Street, Kyiv`
-
-### Notes
-
-- **Max length:** 50 characters (after trimming)
-- **Empty:** Note text must be non-empty after stripping; otherwise validation fails
-- **Storage:** Notes are stored in `notes.pkl` as a list of dicts with `id` (UUID4) and `text`; not tied to contacts
-- **Commands:** `add-note <text>`, `show-notes`
-
-## Requirements
-
-See [requirements.txt](requirements.txt) for full dependency list.
