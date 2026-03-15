@@ -10,7 +10,6 @@ from app.validators import is_valid_tag
 from .show_notes import format_note_records
 
 
-
 @colored_output(success_color=Fore.BLUE, info_color=Fore.BLUE)
 @input_error
 @validate_args(

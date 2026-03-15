@@ -1,6 +1,5 @@
 """Tag class for storing tags from notes."""
 
-
 from app.message_texts import INVALID_TAG_FORMAT
 from app.validators import is_valid_tag
 

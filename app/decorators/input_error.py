@@ -25,7 +25,7 @@ def _format_input_exception(exc: Exception) -> str:
             message = INPUT_ERROR_CONTACT_NOT_FOUND
     elif isinstance(exc, IndexError):
         message = INPUT_ERROR_ENTER_NAME
-    elif isinstance(exc, RecordError, InvalidNoteError):
+    elif isinstance(exc, (RecordError, InvalidNoteError)):
         message = str(exc)
 
     return message

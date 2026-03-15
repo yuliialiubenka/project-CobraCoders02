@@ -112,10 +112,10 @@ def is_valid_note_tag(tag: str) -> bool:
     trimmed = tag.strip()
     if len(trimmed) == 0 or len(trimmed) > 30:
         return False
-    
+
     if "--" in trimmed:
-            return False
-        
+        return False
+
     return not any(char.isspace() for char in trimmed)
 
 
@@ -233,6 +233,7 @@ def is_valid_birthday(birthday: str) -> bool:
         return False
 
     return True
+
 
 def is_valid_tag(tag: str) -> bool:
     """

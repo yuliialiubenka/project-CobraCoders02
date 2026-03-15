@@ -52,7 +52,9 @@ class NoteTitle(Field):
 class Note:
     """Class for storing a note with metadata and unique UUID identifier."""
 
-    def __init__(self, title: str, text: str, tags: list[TagMatch] | None = None) -> None:
+    def __init__(
+        self, title: str, text: str, tags: list[TagMatch] | None = None
+    ) -> None:
         """Initialize note with title, text, and optional tags.
 
         Args:
@@ -66,16 +68,15 @@ class Note:
         self.id: UUID = uuid4()
         self.title: NoteTitle = NoteTitle(title)
         self.text: NoteText = NoteText(text)
-        
+
         converted_tags = [
-            TagMatch(tag if tag.startswith("#") else "#" + tag)
-            for tag in (tags or [])
+            TagMatch(tag if tag.startswith("#") else "#" + tag) for tag in (tags or [])
         ]
-        
+
         text_tags = self.extract_tags_from_text(text)
         full_tag_list = converted_tags + text_tags
         self.tags: list[str] = self.normalize_tags(full_tag_list)
-        
+
         self.created_at: datetime = now
         self.updated_at: datetime = now
 
@@ -101,7 +102,7 @@ class Note:
             normalized_tags.append(trimmed)
 
         return normalized_tags
-    
+
     @staticmethod
     def extract_tags_from_text(text: str) -> list[TagMatch]:
         """Extract tags from text like #tag."""
